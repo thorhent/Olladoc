@@ -1,7 +1,7 @@
 {
     "id" : "com.github.thorhent.Olladoc",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "48",
+    "runtime-version" : "47",
     "sdk" : "org.gnome.Sdk",
     "command" : "olladoc",
     "finish-args" : [
@@ -189,7 +189,7 @@
 		    {
 		      "type": "archive",
 		      "url": "http://files.portaudio.com/archives/pa_stable_v190700_20210406.tgz",
-		      "sha256": "d4e8d6f01ff3c318abb698ea4d9e4ae60eb8e9cb14ebc6f973b2b5d82c3f571b"
+		      "sha256": "47efbf42c77c19a05d22e627d42873e991ec0c1357219c0d74ce6a2948cb2def"
 		    }
 		  ]
 		},
@@ -254,7 +254,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/thorhent/Projects"
+                    "url" : "https://github.com/thorhent/Olladoc.git",
+                    "branch" : "master"
                 }
             ]
         }
