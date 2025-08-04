@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=olladoc
+Exec=olladoc
+Icon=com.github.thorhent.Olladoc
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true
