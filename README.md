@@ -35,9 +35,14 @@
 
 ## 🧪 Cómo ejecutar localmente (Flatpak)
 
-### 📦 1. Construcción y prueba
+### 📦 1. Construcción, prueba e instalación
 
 ```bash
-flatpak-builder --force-clean build-dir org.olladoc.Olladoc.yml
-flatpak-builder --run build-dir org.olladoc.Olladoc.yml olladoc
+flatpak-builder --force-clean build-dir com.github.thorhent.Olladoc
+
+```bash
+flatpak-builder --run build-dir com.github.thorhent.Olladoc olladoc
+
+```bash
+flatpak-builder --user --force-clean --install build-dir com.github.thorhent.Olladoc
 
