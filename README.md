@@ -39,10 +39,6 @@
 
 ```bash
 flatpak-builder --force-clean build-dir com.github.thorhent.Olladoc
-
-```bash
 flatpak-builder --run build-dir com.github.thorhent.Olladoc olladoc
-
-```bash
 flatpak-builder --user --force-clean --install build-dir com.github.thorhent.Olladoc
 
