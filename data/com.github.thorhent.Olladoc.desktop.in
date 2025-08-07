@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=olladoc
-Exec=olladoc
+Exec=Olladoc
 Icon=com.github.thorhent.Olladoc
 Terminal=false
 Type=Application
