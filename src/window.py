@@ -22,7 +22,7 @@ from gi.repository import GLib
 
 from . import consulta, estructurar, guardar
 
-import threading
+import threading, time
 
 import speech_recognition as sr
 
@@ -201,7 +201,7 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         self.recognizer = sr.Recognizer()
         self.microfono = sr.Microphone()
-        self.audio_escuchando = False
+        self.escuchando = False
         self.texto_transcrito = ""
         self.detener_funcion = None
 
@@ -262,44 +262,82 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_generar_resumen.set_label(f"Consultar {nuevo_modelo}")
 
     def on_iniciar_audio(self, button):
+        if self.escuchando:
+            return
 
-        self.audio_escuchando = True
-        self.texto_transcrito = ""  # Vaciar antes de cada nueva grabación
+        self.recognizer = sr.Recognizer()
+        self.microfono = sr.Microphone()
+
+        # Ajuste inicial de ruido
+        with self.microfono as source:
+            self.recognizer.adjust_for_ambient_noise(source, duration=1)
+        print("Calibración inicial completada.")
+
+        self.texto_transcrito = ""
+        self.fragmentos_transcritos = []  # Lista para fragmentos con timestamp
+        self.escuchando = True
+        self.inicio_entrevista = time.time()
+        self.ultima_calibracion = time.time()
 
         self.btn_iniciar_audio.set_sensitive(False)
         self.btn_detener_audio.set_sensitive(True)
 
+        def procesar_audio(recognizer, audio):
+            # Recalibrar cada 2 minutos para entornos con ruido variable
+            if time.time() - self.ultima_calibracion > 120:
+                try:
+                    with self.microfono as source:
+                        recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                    self.ultima_calibracion = time.time()
+                    print("Recalibración de ruido realizada.")
+                except Exception as e:
+                    print(f"Error en recalibración: {e}")
 
-        def callback(recognizer, audio):
             try:
                 texto = recognizer.recognize_google(audio, language="es-ES")
-                GLib.idle_add(self.actualizar_transcripcion, texto)
+                if texto.strip():
+                    ts = time.strftime("%H:%M:%S")
+                    fragmento = f"[{ts}] {texto}"
+                    self.fragmentos_transcritos.append(fragmento)
+
+                    # Actualizar texto completo
+                    self.texto_transcrito += " " + texto
+                    print(f"Transcripción parcial: {texto}")
+
             except sr.UnknownValueError:
-                GLib.idle_add(self.mostrar_error, "No se entendió el audio.")
+                # No mostrar error emergente por cada fragmento no entendido
+                print("Silencio o audio no reconocido.")
             except sr.RequestError as e:
-                GLib.idle_add(self.mostrar_error, f"Error de reconocimiento: {e}")
+                print(f"Error de conexión con el servicio de reconocimiento: {e}")
 
+        self.hilo_escucha = self.recognizer.listen_in_background(
+            self.microfono,
+            procesar_audio,
+            phrase_time_limit=None  # Permite capturar frases largas
+        )
 
-        def iniciar_en_hilo():
-            with self.microfono as source:
-                self.recognizer.adjust_for_ambient_noise(source)
-            self.detener_funcion = self.recognizer.listen_in_background(self.microfono, callback)
-
-
-
-        threading.Thread(target=iniciar_en_hilo, daemon=True).start()
+        print("Grabación iniciada.")
 
 
     def on_detener_audio(self, button):
-        self.audio_escuchando = False
+        if not self.escuchando:
+            return
+
+        self.escuchando = False
+        if hasattr(self, "hilo_escucha"):
+            self.hilo_escucha(wait_for_stop=False)
+
         self.btn_iniciar_audio.set_sensitive(True)
         self.btn_detener_audio.set_sensitive(False)
         self.btn_generar_enfermedad_actual.set_sensitive(True)
 
-        if self.detener_funcion:
-            self.detener_funcion(wait_for_stop=False)  # Detiene el reconocimiento en segundo plano
+        # Guardar transcripción completa y fragmentos con timestamp
+        print("Grabación detenida.")
+        print("Texto final transcrito:", self.texto_transcrito)
+        print("Fragmentos con timestamp:")
+        for f in self.fragmentos_transcritos:
+            print(f)
 
-        print(self.texto_transcrito)
 
     def actualizar_transcripcion(self, nuevo_texto):
         self.texto_transcrito += " " + nuevo_texto.strip()
@@ -310,34 +348,45 @@ class OlladocWindow(Adw.ApplicationWindow):
             self.mostrar_error("No se ha grabado ningún audio.")
             return
 
-        texto_estructurado = estructurar.estructurar_dialogo(self.texto_transcrito)
-        print(texto_estructurado)
+        # Desactivar botones y mostrar spinner
         self.btn_generar_enfermedad_actual.set_sensitive(False)
         self.btn_iniciar_audio.set_sensitive(False)
-
-        #activar spinner
         self.spinner_EA.set_visible(True)
         self.spinner_EA.start()
-        self.spinner_EA.set_size_request(24, 24)
+        self.spinner_EA.set_size_request(20, 20)
 
         def worker():
             try:
-                respuesta = consulta.generar_enfermedad_actual(self.modelo_IA, texto_estructurado)
+                # --- Preprocesamiento ---
+                texto_crudo = self.texto_transcrito.strip()
+
+                # Limitar tamaño para IA si es muy largo (ej. 10k caracteres)
+                if len(texto_crudo) > 10000:
+                    print("Texto muy largo, truncando para IA...")
+                    texto_crudo = texto_crudo[:10000] + " ...[Texto truncado]"
+
+                # Estructurar diálogo (operación pesada)
+                texto_estructurado = estructurar.estructurar_dialogo(texto_crudo)
+
+                # --- Llamada a la IA ---
+                respuesta = consulta.generar_enfermedad_actual(
+                    self.modelo_IA,
+                    texto_estructurado
+                )
+
+                # Actualizar UI con resultado
                 GLib.idle_add(self.text_enfermedad_actual.get_buffer().set_text, respuesta)
 
             except Exception as e:
-                pass
-                #GLib.idle_add(self.mostrar_error, str(e))
+                GLib.idle_add(self.mostrar_error, str(e))
             finally:
                 GLib.idle_add(self.btn_generar_enfermedad_actual.set_sensitive, True)
+                GLib.idle_add(self.btn_iniciar_audio.set_sensitive, True)
                 GLib.idle_add(self.spinner_EA.stop)
                 GLib.idle_add(self.spinner_EA.set_visible, False)
-                GLib.idle_add(self.btn_iniciar_audio.set_sensitive, True)
-                print(f"Respuesta: {respuesta}")
-
+                print("Procesamiento finalizado.")
 
         threading.Thread(target=worker, daemon=True).start()
-
 
     def limpiar_campos(self, *args):
         #if response == 'confirm' :

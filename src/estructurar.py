@@ -1,41 +1,47 @@
 import re
+import difflib
 
-def estructurar_dialogo(texto_crudo):
+
+def estructurar_dialogo(texto_crudo: str):
     """
-    Convierte una transcripción de entrevista médica en diálogo estructurado.
-
-    Args:
-        texto_crudo (str): Texto continuo sin separación de roles.
-
-    Returns:
-        str: Diálogo estructurado con 'Médico:' y 'Paciente:'.
+    Estructura el texto transcrito de una entrevista médico-paciente
+    para presentarlo de forma clara y útil a un modelo de IA.
     """
+    # Limpieza inicial
+    texto = texto_crudo.strip()
+    texto = re.sub(r'\s+', ' ', texto)  # Quitar espacios dobles
+    texto = re.sub(r'\b(eh|este|mmm|ajá)\b', '', texto, flags=re.IGNORECASE)  # Quitar muletillas
 
-    # Lista base de preguntas médicas frecuentes
-    preguntas_base = [
-        "cómo está", "cómo se llama", "cuántos años tiene", "por qué razón viene",
-        "cuándo ha empezado", "ha tenido náuseas", "ha tenido diarrea", 
-        "ha viajado fuera del país", "desde cuándo", "dónde le duele",
-        "qué síntomas ha presentado", "tiene fiebre", "ha tenido escalofríos"
+    # Segmentación robusta: cortar en frases por puntuación fuerte
+    frases = re.split(r'(?<=[\.\?\!])\s+', texto)
+    frases = [f.strip() for f in frases if f.strip()]
+
+    #dialogo_json = []
+    texto_final = ""
+    rol_actual = "Médico"  # Suponemos que comienza el médico
+
+    # Lista de indicios de pregunta médica
+    indicios_pregunta = [
+        "cuándo", "desde cuándo", "ha tenido", "ha notado", "ha presentado",
+        "tiene antecedentes", "usa", "ha usado", "ha sufrido", "qué siente",
+        "puede describir", "dónde le duele", "ha visto", "ha percibido"
     ]
 
-    # Frases del texto
-    frases = re.split(r"(?<=[.?!])\s+|(?<=\s)(?=[A-Z])", texto_crudo)
-    resultado = []
-    es_pregunta = True  # Alternamos entre médico y paciente
-
     for frase in frases:
-        frase = frase.strip().capitalize()
+        frase_lower = frase.lower()
 
-        if not frase:
-            continue
+        # Detectar si es pregunta
+        es_pregunta = frase.endswith("?") or any(indicio in frase_lower for indicio in indicios_pregunta)
 
-        # Heurística: contiene una pregunta conocida
-        if any(p in frase.lower() for p in preguntas_base) or frase.endswith("?") or frase.lower().startswith("por qué"):
-            resultado.append(f"Médico: {frase}")
-            es_pregunta = False
+        if es_pregunta:
+            rol = "Médico"
         else:
-            resultado.append(f"Paciente: {frase}")
-            es_pregunta = True
+            # Si no es pregunta y el rol anterior fue Médico, pasamos a Paciente
+            rol = "Paciente" if rol_actual == "Médico" else rol_actual
 
-    return "\n".join(resultado)
+        # Guardar turno
+        #dialogo_json.append({"rol": rol, "texto": frase})
+        texto_final += f"{rol}: {frase}\n"
+        rol_actual = rol
+
+    return texto_final.strip()
