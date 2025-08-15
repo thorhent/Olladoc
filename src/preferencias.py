@@ -24,12 +24,12 @@ class PreferenciasWindow(Adw.PreferencesWindow):
         
 
         # Crear lista de opciones
-        modelos = ["Llama3", "Elixpo", "Mistral"]
+        modelos = ["Gemma3", "Llama3.2", "Mistral"]
         string_list = Gtk.StringList.new(modelos)
 
         
         # Obtener índice del modelo guardado, o usar 0 si no existe
-        modelo_actual = app.modelo_IA if hasattr(app, "modelo_IA") else "Llama3"
+        modelo_actual = app.modelo_IA if hasattr(app, "modelo_IA") else "Gemma3"
         try:
             index_modelo = modelos.index(modelo_actual)
         except ValueError:
@@ -51,11 +51,9 @@ class PreferenciasWindow(Adw.PreferencesWindow):
 
         # Lista de ActionRows informativas
         rows = [
-            ("Llama3", """Última generación de Meta. Ajustado para instrucciones, con excelente capacidad de  comprensión contextual y generación de lenguaje técnico. Capacidad avanzada para razonamiento clínico complejo. Ideal para casos diferenciales, protocolos médicos, manejo integral y análisis estructurado de historias clínicas."""),
-            ("Elixpo/LlamaMedicine", """Modelo especializado en medicina, afinado con corpus clínico. Lenguaje médico técnico y orientado a razonamiento diagnóstico. Recomendado para generación de hipótesis clínicas, estudios complementarios y orientación terapéutica general."""),
-            ("Mistral", """Modelo ágil y eficiente de código abierto. Entrenado para seguir instrucciones con rapidez y claridad. Útil para tareas clínicas generales, sugerencias rápidas y generación de texto médico básico.""")
-
-             
+            ("Gemma3:4b", """Modelo de Google, 4 B parámetros, rápido y eficiente, con capacidad multimodal (texto e imágenes) y buena comprensión de instrucciones."""),
+            ("Llama3.2:3b", """Modelo de Meta, 3 B parámetros, multilingüe, optimizado para diálogo y tareas generales con bajo consumo."""),
+            ("Mistral:7b-instruct-v0.3-q2_K", """Modelo instructivo de 7 B parámetros, buen rendimiento en programación, razonamiento y generación coherente de texto.""")
         ]
 
         for nombre, descripcion in rows:
@@ -97,4 +95,4 @@ class PreferenciasWindow(Adw.PreferencesWindow):
             app = self.get_application()
             app.actualizar_modelo(modelo)
             
-        
+

@@ -37,7 +37,7 @@ class OlladocApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
-        self.modelo_IA = "Llama3"  # Valor inicial por defecto
+        self.modelo_IA = "Gemma3"  # Valor inicial por defecto
 
     def do_activate(self):
         """Called when the application is activated.

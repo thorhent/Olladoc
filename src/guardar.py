@@ -4,14 +4,14 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from gi.repository import Gtk, Gio, GLib
 
-def guardar_historia_clinica_pdf(widget, datos_historia_clinica, idHC):
+def guardar_historia_clinica_pdf(widget, datos_historia_clinica, modelo, idHC):
     # Paso 1: Diálogo para elegir carpeta
     file_dialog = Gtk.FileDialog()
     file_dialog.set_title("Guardar HC")
     
     # Crear sugerencia de nombre de archivo
     fecha_actual = datetime.date.today().isoformat()
-    nombre_archivo = f"HC_{fecha_actual}_{idHC}.pdf"
+    nombre_archivo = f"HC_{fecha_actual}_{modelo}_{idHC}.pdf"
 
     # Crear sugerencia de archivo
     initial_file = Gio.File.new_for_path(GLib.get_home_dir() + "/" + nombre_archivo)
@@ -23,9 +23,6 @@ def guardar_historia_clinica_pdf(widget, datos_historia_clinica, idHC):
         lambda dialog, result: _on_guardar_pdf_resultado(dialog, result, datos_historia_clinica, widget)
     )
     
-
-
-
 
 def _on_guardar_pdf_resultado(dialog, result, datos_historia_clinica, widget):
     try:

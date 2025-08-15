@@ -4,27 +4,29 @@ from requests.exceptions import RequestException
 
 # Diccionario para mapear alias a nombres reales de modelos
 MODELOS_DISPONIBLES = {
-    "Llama3": "llama3.1:8b",
-    "Elixpo": "Elixpo/LlamaMedicine:latest",
-    "Mistral": "mistral:instruct",
+    "Gemma3": "gemma3:4b",
+    "Llama3.2": "llama3.2:3b",
+    "Mistral": "mistral:7b-instruct-v0.3-q2_K",
 }
 
 def definir_modelo_IA(modelo):
     return MODELOS_DISPONIBLES.get(modelo, modelo)
 
 
-def generar_enfermedad_actual(modelo_IA, texto_transcrito):
+def generar_historia_clinica_ollama(modelo_IA, texto_transcrito):
     modelo = definir_modelo_IA(modelo_IA)
 
     prompt = f"""Eres un médico clínico experto en historia clínica. Recibirás a continuación la transcripción de una entrevista entre un médico y un paciente, incluyendo tanto las preguntas del médico como las respuestas del paciente.
 
-    Tu tarea es triple:
+    Tu tarea es:
 
-    1. Redactar la sección **"Enfermedad actual"** de la historia clínica, utilizando lenguaje médico técnico, claro, profesional y narrativo. Describe cronológicamente el inicio, evolución, características de los síntomas, factores agravantes o atenuantes, tratamientos realizados y cualquier otro dato relevante.
+    1. Redactar la sección **Enfermedad actual** de la historia clínica.
 
-    2. Realizar una **evaluación de la entrevista médica**, señalando si faltaron datos clave, si las preguntas fueron poco específicas o si hubo información que el médico podría haber indagado mejor.
+    2. Redactar la sección **Antecedentes personales** de la historia clínica.
 
-    3. Sugerir una lista de **preguntas adicionales** que sería útil realizar al paciente para completar la información clínica, sin emitir diagnósticos.
+    3. Redactar la sección **Antecedentes familiares** de la historia clínica.
+
+    4. Evaluar la historia clínica, sugerir diagnóstico presuntivo y preguntas adicionales para completar la historia clínica.
 
     ---
 
@@ -33,7 +35,7 @@ def generar_enfermedad_actual(modelo_IA, texto_transcrito):
     {texto_transcrito}
     """
 
-    response = llamar_ollama(modelo, prompt, stream=False)
+    response = llamar_ollama(modelo, prompt)
     return response
 
 
@@ -43,55 +45,56 @@ def generar_diagnostico_completo_ollama(modelo_IA, datos_personales, motivo_cons
 
 
     # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo
-    prompt = f"""
-        - Datos personales:
-        {datos_personales}
+    prompt = f"""Eres un médico clínico meticuloso. Debes generar de modo conciso un diagnóstico más probable, diagnóstico diferencial y estudios complementarios para confirmar diagnóstico basado en los posteriores datos clínicos que te doy.
 
-        - Motivo de consulta:
-        {motivo_consulta}
+Respetar la forma:
 
-        - Enfermedad actual:
-        {enfermedad_actual}
+1. Diagnóstico presuntivo:
 
-        - Antecedentes:
-        {antecedentes}
+2. Diagnóstico diferencial:
 
-        - Exploración física:
-        {exploracion}
+3. Estudios complementarios:
 
-        Generar manejo médico con diagnóstico presuntivo y diferencial, estudios complementarios y tratamientos (farmacológicos, no farmacológicos o quirúrgicos). Siempre de forma clara, meticulosa, concreta y en español.
-        Respetar la siguiente forma:
+Datos clínicos:
 
-        Diagnóstico presuntivo:
+- Datos personales:
+{datos_personales}
 
-        Diagnóstico diferencial:
+- Motivo de consulta:
+{motivo_consulta}
 
-        Estudios complementarios:
+- Enfermedad actual:
+{enfermedad_actual}
 
-        Tratamiento:
+- Antecedentes:
+{antecedentes}
 
-        """
+- Exploración física:
+{exploracion}
+"""
 
-    respuesta = llamar_ollama(modelo, prompt, stream=False)
+    respuesta = llamar_ollama(modelo, prompt)
     return respuesta
 
-def llamar_ollama(modelo, prompt, stream):
+def llamar_ollama(modelo, prompt):
     # Llamada HTTP POST al servidor local de Ollama
+
     try:
-        response = requests.post(
+        with requests.post(
             "http://localhost:11434/api/generate",
             json={
                 "model": modelo,
                 "prompt": prompt,
-                "stream": stream,
+                "stream": False
             },
-            stream=stream
-        )
-        if not response.ok:
-            raise RuntimeError(f"Error en la respuesta de Ollama: {response.status_code} - {response.text}")
-        else:
-            return response.json().get("response", "").strip()
+            stream=False,
+            timeout=720  # Aumentar el tiempo de espera a 12 minutos
 
+        ) as response:
+            if response.ok:
+                return response.json().get("response", "").strip()
+            else:
+                raise RuntimeError(f"Error en la respuesta de Ollama: {response.status_code} - {response.text}")
 
     except RequestException as e:
         raise RuntimeError(f"Error de conexión con Ollama: {str(e)}")

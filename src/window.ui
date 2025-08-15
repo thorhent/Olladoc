@@ -75,7 +75,6 @@
                                             <items>
                                               <item>Masculino</item>
                                               <item>Femenino</item>
-                                              <item>Otro</item>
                                               <item>No especifica</item>
                                             </items>
                                           </object>
@@ -90,9 +89,10 @@
                                             <items>
                                               <item>Soltero</item>
                                               <item>Casado</item>
+                                              <item>Unión convivencial</item>
                                               <item>Separado</item>
                                               <item>Divorciado</item>
-                                              <item>Otro</item>
+                                              <item>Viudo</item>
                                             </items>
                                           </object>
                                         </property>
@@ -124,7 +124,7 @@
                               <object class="GtkButton" id="btn_to_page2">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a Página 2</property>
+                                <property name="tooltip-text">Ir a página 2</property>
                                 <property name="valign">center</property>
                                 <style>
                                   <class name="flat"/>
@@ -156,7 +156,7 @@
                               <object class="GtkButton" id="btn_back_to_page1">
                                 <property name="icon-name">go-previous-symbolic</property>
                                 <property name="margin-start">5</property>
-                                <property name="tooltip-text">Volver a Página 1</property>
+                                <property name="tooltip-text">Volver a página 1</property>
                                 <style>
                                   <class name="pill"/>
                                   <class name="flat"/>
@@ -182,29 +182,6 @@
                                     <child>
                                       <object class="AdwPreferencesGroup">
                                         <property name="title">Enfermedad actual</property>
-                                        <child>
-                                          <object class="AdwPreferencesRow">
-                                            <property name="title">Descripción</property>
-                                            <child>
-                                              <object class="GtkTextView" id="text_enfermedad_actual">
-                                                <property name="bottom-margin">5</property>
-                                                <!-- Aproximadamente caracteres con fuente monoespaciada -->
-                                                <property name="height-request">300</property>
-                                                <property name="hexpand">True</property>
-                                                <property name="justification">fill</property>
-                                                <property name="left-margin">5</property>
-                                                <property name="monospace">True</property>
-                                                <property name="pixels-above-lines">5</property>
-                                                <property name="pixels-below-lines">5</property>
-                                                <property name="vexpand">False</property>
-                                                <property name="width-request">340</property>
-                                                <property name="wrap-mode">word-char</property>
-                                                <property name="margin-start">5</property>
-                                                <property name="margin-end">5</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
 
                                         <child>
                                           <object class="AdwExpanderRow">
@@ -262,6 +239,32 @@
                                           </object>
                                         </child>
 
+
+                                        <child>
+                                          <object class="AdwPreferencesRow">
+                                            <property name="title">Descripción</property>
+                                            <child>
+                                              <object class="GtkTextView" id="text_enfermedad_actual">
+                                                <property name="bottom-margin">5</property>
+                                                <!-- Aproximadamente caracteres con fuente monoespaciada -->
+                                                <property name="height-request">300</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="justification">fill</property>
+                                                <property name="left-margin">5</property>
+                                                <property name="monospace">True</property>
+                                                <property name="pixels-above-lines">5</property>
+                                                <property name="pixels-below-lines">5</property>
+                                                <property name="vexpand">False</property>
+                                                <property name="width-request">340</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+
                                         <child>
                                           <object class="AdwActionRow">
                                             <property name="title">Entrada de audio</property>
@@ -304,7 +307,7 @@
 
                                             <!-- Spinner -->
                                             <child>
-                                              <object class="GtkSpinner" id="spinner_enfermedad_actual">
+                                              <object class="GtkSpinner" id="spinner_historia_clinica">
                                                 <property name="visible">False</property>
                                                 <property name="valign">center</property>
                                                 <property name="margin-end">5</property>
@@ -314,8 +317,8 @@
 
                                             <!-- Botón generar enfermedad actual -->
                                             <child>
-                                              <object class="GtkButton" id="btn_generar_enfermedad_actual">
-                                                <property name="label">Generar EA</property>
+                                              <object class="GtkButton" id="btn_generar_historia_clinica">
+                                                <property name="label">Procesar audio</property>
 
                                                 <property name="tooltip-text">Usar captura de audio para redactar narración médica</property>
                                                 <style>
@@ -347,7 +350,7 @@
                               <object class="GtkButton" id="btn_to_page3">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a Página 3</property>
+                                <property name="tooltip-text">Ir a página 3</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -408,30 +411,6 @@
                                 <child>
                                   <object class="AdwPreferencesGroup">
                                     <property name="title">Antecedentes personales</property>
-
-                                    <!-- Campo de texto -->
-                                    <child>
-                                      <object class="AdwPreferencesRow">
-                                        <property name="title">Redacción</property>
-                                        <child>
-                                          <object class="GtkTextView" id="text_antecedentes_personales">
-                                            <property name="bottom-margin">5</property>
-                                            <property name="height-request">300</property>
-                                            <property name="hexpand">True</property>
-                                            <property name="justification">fill</property>
-                                            <property name="left-margin">5</property>
-                                            <property name="monospace">True</property>
-                                            <property name="pixels-above-lines">5</property>
-                                            <property name="pixels-below-lines">5</property>
-                                            <property name="vexpand">False</property>
-                                            <property name="width-request">340</property>
-                                            <property name="wrap-mode">word-char</property>
-                                            <property name="margin-start">5</property>
-                                            <property name="margin-end">5</property>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
 
                                     <!-- Guía expandible -->
                                     <child>
@@ -494,24 +473,14 @@
                                         </child>
                                       </object>
                                     </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
 
-                            <!-- Antecedentes familiares -->
-                            <child>
-                              <object class="AdwPreferencesPage">
-                                <child>
-                                  <object class="AdwPreferencesGroup">
-                                    <property name="title">Antecedentes familiares</property>
 
                                     <!-- Campo de texto -->
                                     <child>
                                       <object class="AdwPreferencesRow">
                                         <property name="title">Redacción</property>
                                         <child>
-                                          <object class="GtkTextView" id="text_antecedentes_familiares">
+                                          <object class="GtkTextView" id="text_antecedentes_personales">
                                             <property name="bottom-margin">5</property>
                                             <property name="height-request">300</property>
                                             <property name="hexpand">True</property>
@@ -529,6 +498,20 @@
                                         </child>
                                       </object>
                                     </child>
+
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <!-- Antecedentes familiares -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Antecedentes familiares</property>
+
 
                                     <!-- Guía expandible -->
                                     <child>
@@ -570,6 +553,32 @@
                                         </child>
                                       </object>
                                     </child>
+
+                                    <!-- Campo de texto -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Redacción</property>
+                                        <child>
+                                          <object class="GtkTextView" id="text_antecedentes_familiares">
+                                            <property name="bottom-margin">5</property>
+                                            <property name="height-request">300</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="justification">fill</property>
+                                            <property name="left-margin">5</property>
+                                            <property name="monospace">True</property>
+                                            <property name="pixels-above-lines">5</property>
+                                            <property name="pixels-below-lines">5</property>
+                                            <property name="vexpand">False</property>
+                                            <property name="width-request">340</property>
+                                            <property name="wrap-mode">word-char</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
                                   </object>
                                 </child>
                               </object>
@@ -587,7 +596,7 @@
                               <object class="GtkButton" id="btn_to_page4">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a Página 4</property>
+                                <property name="tooltip-text">Ir a página 4</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -621,7 +630,7 @@
                               <object class="GtkButton" id="btn_back_to_page3">
                                 <property name="icon-name">go-previous-symbolic</property>
                                 <property name="margin-start">5</property>
-                                <property name="tooltip-text">Volver a Página 3</property>
+                                <property name="tooltip-text">Volver a página 3</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -1923,7 +1932,7 @@
                               <object class="GtkButton" id="btn_to_page5">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a Página 5</property>
+                                <property name="tooltip-text">Ir a página 5</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -1939,7 +1948,6 @@
                 </child>
 
 
-                <!-- Página 5 -->
                 <!-- Página 5 -->
                 <child>
                   <object class="AdwNavigationPage" id="page5">
@@ -2048,50 +2056,6 @@
                                       </object>
                                     </child>
 
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-
-                            <!-- Columna derecha: exploración física -->
-                            <child>
-                              <object class="AdwPreferencesPage">
-                                <child>
-                                  <object class="AdwPreferencesGroup">
-                                    <property name="title">Exploración física</property>
-
-                                    <!-- Campo: insertar datos -->
-                                    <child>
-                                      <object class="AdwPreferencesRow">
-                                        <child>
-                                          <object class="GtkBox">
-                                            <property name="orientation">vertical</property>
-                                            <property name="spacing">4</property>
-                                            <child>
-                                              <object class="GtkLabel">
-                                                <property name="label"></property>
-                                                <property name="halign">start</property>
-                                                <property name="margin-start">5</property>
-                                                <style>
-                                                  <class name="dim-label"/>
-                                                </style>
-                                              </object>
-                                            </child>
-                                            <child>
-                                              <object class="GtkTextView" id="text_exploracion_fisica">
-                                                <property name="height-request">190</property>
-                                                <property name="wrap-mode">word-char</property>
-                                                <property name="monospace">True</property>
-                                                <property name="margin-start">5</property>
-                                                <property name="margin-end">5</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-
-
                                     <!-- Guía expandible -->
                                     <child>
                                       <object class="AdwPreferencesRow">
@@ -2177,6 +2141,52 @@
                                         </child>
                                       </object>
                                     </child>
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+
+
+                            <!-- Columna derecha: exploración física -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Exploración física</property>
+
+                                    <!-- Campo: insertar datos -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">4</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="label"></property>
+                                                <property name="halign">start</property>
+                                                <property name="margin-start">5</property>
+                                                <style>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkTextView" id="text_exploracion_fisica">
+                                                <property name="height-request">305</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="monospace">True</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
                                   </object>
                                 </child>
                               </object>
@@ -2269,7 +2279,7 @@
                                             <property name="spacing">20</property>
                                             <child>
                                               <object class="GtkLabel">
-                                                <property name="label">Diagnóstico presuntivo y diferencial, estudios complementarios y tratamiento</property>
+                                                <property name="label">Diagnóstico presuntivo, diferencial y estudios complementarios</property>
                                                 <property name="halign">start</property>
                                                 <property name="margin-start">5</property>
                                                 <style>

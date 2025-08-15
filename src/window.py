@@ -62,9 +62,9 @@ class OlladocWindow(Adw.ApplicationWindow):
     text_enfermedad_actual = Gtk.Template.Child("text_enfermedad_actual")
     btn_iniciar_audio = Gtk.Template.Child("btn_iniciar_audio")
     btn_detener_audio = Gtk.Template.Child("btn_detener_audio")
-    btn_generar_enfermedad_actual = Gtk.Template.Child("btn_generar_enfermedad_actual")
+    btn_generar_historia_clinica = Gtk.Template.Child("btn_generar_historia_clinica")
 
-    spinner_EA = Gtk.Template.Child("spinner_enfermedad_actual")
+    spinner_HC = Gtk.Template.Child("spinner_historia_clinica")
 
 
     #Página 3 widgets
@@ -206,8 +206,8 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.detener_funcion = None
 
 
-        self.btn_generar_enfermedad_actual.connect("clicked", self.on_generar_enfermedad_actual)
-        self.btn_generar_enfermedad_actual.set_sensitive(False)
+        self.btn_generar_historia_clinica.connect("clicked", self.on_generar_historia_clinica)
+        self.btn_generar_historia_clinica.set_sensitive(False)
 
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
@@ -343,17 +343,17 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.texto_transcrito += " " + nuevo_texto.strip()
 
 
-    def on_generar_enfermedad_actual(self, button):
+    def on_generar_historia_clinica(self, button):
         if not self.texto_transcrito.strip():
             self.mostrar_error("No se ha grabado ningún audio.")
             return
 
         # Desactivar botones y mostrar spinner
-        self.btn_generar_enfermedad_actual.set_sensitive(False)
+        self.btn_generar_historia_clinica.set_sensitive(False)
         self.btn_iniciar_audio.set_sensitive(False)
-        self.spinner_EA.set_visible(True)
-        self.spinner_EA.start()
-        self.spinner_EA.set_size_request(20, 20)
+        self.spinner_HC.set_visible(True)
+        self.spinner_HC.start()
+        self.spinner_HC.set_size_request(20, 20)
 
         def worker():
             try:
@@ -369,10 +369,12 @@ class OlladocWindow(Adw.ApplicationWindow):
                 texto_estructurado = estructurar.estructurar_dialogo(texto_crudo)
 
                 # --- Llamada a la IA ---
-                respuesta = consulta.generar_enfermedad_actual(
+                respuesta = consulta.generar_historia_clinica_ollama(
                     self.modelo_IA,
                     texto_estructurado
                 )
+
+                # Dividir la respuesta según las secciones y enviar a los TextViews correspondientes
 
                 # Actualizar UI con resultado
                 GLib.idle_add(self.text_enfermedad_actual.get_buffer().set_text, respuesta)
@@ -380,16 +382,15 @@ class OlladocWindow(Adw.ApplicationWindow):
             except Exception as e:
                 GLib.idle_add(self.mostrar_error, str(e))
             finally:
-                GLib.idle_add(self.btn_generar_enfermedad_actual.set_sensitive, True)
+                GLib.idle_add(self.btn_generar_historia_clinica.set_sensitive, True)
                 GLib.idle_add(self.btn_iniciar_audio.set_sensitive, True)
-                GLib.idle_add(self.spinner_EA.stop)
-                GLib.idle_add(self.spinner_EA.set_visible, False)
+                GLib.idle_add(self.spinner_HC.stop)
+                GLib.idle_add(self.spinner_HC.set_visible, False)
                 print("Procesamiento finalizado.")
 
         threading.Thread(target=worker, daemon=True).start()
 
     def limpiar_campos(self, *args):
-        #if response == 'confirm' :
         def limpiar_textview(tv):
             tv.get_buffer().set_text("")
 
@@ -486,13 +487,18 @@ class OlladocWindow(Adw.ApplicationWindow):
         selected_index_estado = self.entry_estado_civil.get_selected()
         if selected_index_estado != -1:
             estado_civil = self.entry_estado_civil.get_model().get_string(selected_index_estado)
+            if sexo == "Femenino" and estado_civil.endswith("o"):
+                estado_civil = estado_civil[:-1] + "a"  # Cambiar a femenino si es necesario
         else:
             estado_civil = ""
+
+
 
         # Recoger datos de contacto
         telefono = self.entry_telefono.get_text()
         email = self.entry_email.get_text()
-        datos_personales = f"Nombre: {nombre}, DNI: {dni}, Edad: {edad}, Dirección: {direccion}, Ocupación: {ocupacion}, Sexo: {sexo}, Estado Civil: {estado_civil}, Teléfono: {telefono}, Email: {email}"
+        datos_personales_completo = f"Nombre: {nombre}, DNI: {dni}, Edad: {edad}, Dirección: {direccion}, Ocupación: {ocupacion}, Sexo: {sexo}, Estado Civil: {estado_civil}, Teléfono: {telefono}, Email: {email}"
+        datos_personales = f"Nombre: {nombre}, Edad: {edad}, Sexo: {sexo}, Estado Civil: {estado_civil}"
 
         enfermedad_actual = self.get_text_from_view(self.text_enfermedad_actual)
         antecedentes = self.get_text_from_view(self.text_antecedentes_personales) + "\n" + self.get_text_from_view(self.text_antecedentes_familiares)
@@ -507,10 +513,6 @@ class OlladocWindow(Adw.ApplicationWindow):
         exploracion = f"{signos_vitales} \n "+ self.get_text_from_view(self.text_exploracion_fisica)
 
         modelo_IA = getattr(self.get_application(), "modelo_IA", None)
-        if modelo_IA is None:
-            modelo_IA = "Llama3"  # valor por defecto si no se seleccionó aún
-
-        print(f"Modelo: {modelo_IA}")
 
 
         self.btn_generar_resumen.set_sensitive(False)
@@ -522,22 +524,22 @@ class OlladocWindow(Adw.ApplicationWindow):
         buffer.set_text("")
 
         self.historia_clinica = {
-            "datos_personales": datos_personales,
-            "motivo_consulta": motivo_consulta,
-            "enfermedad_actual": enfermedad_actual,
-            "antecedentes": antecedentes,
-            "exploracion": exploracion,
-            "solucion": "",
+            "Datos personales": datos_personales_completo,
+            "Motivo consulta": motivo_consulta,
+            "Enfermedad actual": enfermedad_actual,
+            "Antecedentes": antecedentes,
+            "Exploración": exploracion,
+            "Solución": "",
         }
 
 
         def worker():
             try:
-                repuesta =  consulta.generar_diagnostico_completo_ollama(modelo_IA, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion)
+                respuesta =  consulta.generar_diagnostico_completo_ollama(modelo_IA, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion)
 
-                GLib.idle_add(buffer.set_text, repuesta)
-                GLib.idle_add(self.mostrar_respuesta, repuesta)
-                self.historia_clinica["solucion"] = repuesta
+                GLib.idle_add(buffer.set_text, respuesta)
+                #GLib.idle_add(self.mostrar_respuesta, respuesta)
+                self.historia_clinica["Solución"] = respuesta
 
             except Exception as e:
                 GLib.idle_add(self.mostrar_error, str(e))
@@ -549,8 +551,6 @@ class OlladocWindow(Adw.ApplicationWindow):
                 GLib.idle_add(self.btn_limpiar.set_sensitive, True)
 
 
-
-
         threading.Thread(target=worker, daemon=True).start()
 
     def on_generar_pdf_historia_clinica(self, button):
@@ -559,5 +559,5 @@ class OlladocWindow(Adw.ApplicationWindow):
             return
 
         self.idHC += 1  # Incrementar el ID de la historia clínica
-        guardar.guardar_historia_clinica_pdf(self, self.historia_clinica, self.idHC)
+        guardar.guardar_historia_clinica_pdf(self, self.historia_clinica, self.modelo_IA, self.idHC)
         
