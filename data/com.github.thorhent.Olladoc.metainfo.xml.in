@@ -12,7 +12,7 @@
   </description>
 
   <developer id="com.github.thorhent">
-    <name>Dr. Taylan Branco Meurer</name>
+    <name>Taylan Branco Meurer</name>
   </developer>
 
   <!-- Required: Should be a link to the upstream homepage for the component -->
@@ -63,14 +63,15 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/thorhent/Olladoc/blob/master/data/olladoc-img1.png</image>
+      <image>https://raw.githubusercontent.com/thorhent/Olladoc/master/data/olladoc-img1.png</image>
       <caption>Primera página (1 de 6)</caption>
     </screenshot>
     <screenshot>
-      <image>https://github.com/thorhent/Olladoc/blob/master/data/consulta.png</image>
+      <image>https://raw.githubusercontent.com/thorhent/Olladoc/master/data/consulta.png</image>
       <caption>Página 6 (Consultar IA, guardar historia clínica completa y limpiarla)</caption>
     </screenshot>
   </screenshots>
+
 
   <releases>
     <release version="0.8.25" date="2025-08-07">
