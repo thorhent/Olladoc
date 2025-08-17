@@ -6,7 +6,7 @@ from requests.exceptions import RequestException
 MODELOS_DISPONIBLES = {
     "Gemma3": "gemma3:4b",
     "Llama3.2": "llama3.2:3b",
-    "Mistral": "mistral:7b-instruct-v0.3-q2_K",
+    "Phi3.5": "phi3.5:3.8b",
 }
 
 def definir_modelo_IA(modelo):

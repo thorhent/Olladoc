@@ -24,7 +24,7 @@ class PreferenciasWindow(Adw.PreferencesWindow):
         
 
         # Crear lista de opciones
-        modelos = ["Gemma3", "Llama3.2", "Mistral"]
+        modelos = ["Gemma3", "Llama3.2", "Phi3.5"]
         string_list = Gtk.StringList.new(modelos)
 
         
@@ -53,7 +53,7 @@ class PreferenciasWindow(Adw.PreferencesWindow):
         rows = [
             ("Gemma3:4b", """Modelo de Google, 4 B parámetros, rápido y eficiente, con capacidad multimodal (texto e imágenes) y buena comprensión de instrucciones."""),
             ("Llama3.2:3b", """Modelo de Meta, 3 B parámetros, multilingüe, optimizado para diálogo y tareas generales con bajo consumo."""),
-            ("Mistral:7b-instruct-v0.3-q2_K", """Modelo instructivo de 7 B parámetros, buen rendimiento en programación, razonamiento y generación coherente de texto.""")
+            ("Phi3.5:3.8b", """Modelo de lenguaje desarrollado por Microsoft, perteneciente a la familia Phi. Consta de aproximadamente 3.8 mil millones de parámetros, lo que lo sitúa en la categoría de modelos ligeros, optimizados para eficiencia y despliegue en hardware con recursos limitados.""")
         ]
 
         for nombre, descripcion in rows:
