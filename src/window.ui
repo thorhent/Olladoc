@@ -609,11 +609,131 @@
                     </child>
                   </object>
                 </child>
+                <!-- Pagina 4 evaluación de la HC -->
 
-                <!-- Pagina 4: Revisión por Sistemas -->
                 <child>
                   <object class="AdwNavigationPage" id="page4">
                     <property name="tag">page4</property>
+                    <property name="title">Evaluación de la historia clínica</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page3">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 3</property>
+                                <style>
+                                  <class name="pill"/>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-end">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+                                <child>
+                                  <object class="AdwPreferencesPage">
+                                    <child>
+                                      <object class="AdwPreferencesGroup">
+                                        <property name="title">Evaluación, diagnóstico inicial y sugerencias</property>
+
+                                        <child>
+                                          <object class="AdwPreferencesRow">
+                                            <property name="title">Descripción</property>
+                                            <child>
+                                              <object class="GtkTextView" id="text_evaluacion_IA">
+                                                <property name="bottom-margin">5</property>
+                                                <!-- Aproximadamente caracteres con fuente monoespaciada -->
+                                                <property name="height-request">300</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="justification">fill</property>
+                                                <property name="left-margin">5</property>
+                                                <property name="monospace">True</property>
+                                                <property name="pixels-above-lines">5</property>
+                                                <property name="pixels-below-lines">5</property>
+                                                <property name="vexpand">False</property>
+                                                <property name="width-request">340</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <child>
+                                          <object class="AdwActionRow" id="AdwPage4Evaluacion">
+                                            <property name="title">Evaluar, sugerir y diagnosticar</property>
+                                            <property name="subtitle">Consulta modelo IA para obtener una evaluación de la historia clínica, algunas sugerencias y diagnóstico inicial</property>
+                                            <child>
+                                              <object class="GtkButton" id="btn_evaluacion_IA">
+                                                <property name="label">Consultar</property>
+                                                <property name="margin-top">15</property>
+                                                <property name="margin-bottom">15</property>
+                                                <property name="tooltip-text">El prompt de la consulta está compuesto por motivo de consulta, algunos datos personales, enfermedad actual y antecedentes</property>
+                                                <style>
+                                                  <class name="pill"/>
+                                                  <class name="suggested-action"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page5">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 5</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+
+                <!-- Pagina 5: Revisión por Sistemas -->
+                <child>
+                  <object class="AdwNavigationPage" id="page5">
+                    <property name="tag">page5</property>
                     <property name="title">Revisión por sistemas</property>
                     <child>
                       <object class="GtkBox">
@@ -627,10 +747,10 @@
                             <property name="valign">center</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkButton" id="btn_back_to_page3">
+                              <object class="GtkButton" id="btn_back_to_page4">
                                 <property name="icon-name">go-previous-symbolic</property>
                                 <property name="margin-start">5</property>
-                                <property name="tooltip-text">Volver a página 3</property>
+                                <property name="tooltip-text">Volver a página 4</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -1915,12 +2035,14 @@
                                       </object>
                                     </child>
 
+
                                   </object>
                                 </child>
                               </object>
                             </child>
                           </object>
                         </child>
+
 
                         <!-- Botón siguiente -->
                         <child>
@@ -1929,10 +2051,10 @@
                             <property name="valign">center</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkButton" id="btn_to_page5">
+                              <object class="GtkButton" id="btn_to_page6">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a página 5</property>
+                                <property name="tooltip-text">Ir a página 6</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -1948,10 +2070,10 @@
                 </child>
 
 
-                <!-- Página 5 -->
+                <!-- Página 6 Exploracion fisica -->
                 <child>
-                  <object class="AdwNavigationPage" id="page5">
-                    <property name="tag">page5</property>
+                  <object class="AdwNavigationPage" id="page6">
+                    <property name="tag">page6</property>
                     <property name="title">Exploración física</property>
                     <child>
                       <object class="GtkBox">
@@ -1965,10 +2087,10 @@
                             <property name="valign">center</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkButton" id="btn_back_to_page4">
+                              <object class="GtkButton" id="btn_back_to_page5">
                                 <property name="icon-name">go-previous-symbolic</property>
                                 <property name="margin-start">5</property>
-                                <property name="tooltip-text">Volver a página 4</property>
+                                <property name="tooltip-text">Volver a página 5</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -2201,10 +2323,10 @@
                             <property name="valign">center</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkButton" id="btn_to_page6">
+                              <object class="GtkButton" id="btn_to_page7">
                                 <property name="icon-name">go-next-symbolic</property>
                                 <property name="margin-end">5</property>
-                                <property name="tooltip-text">Ir a página 6</property>
+                                <property name="tooltip-text">Ir a página 7</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>
@@ -2218,10 +2340,10 @@
                   </object>
                 </child>
 
-                <!-- pagina 6 -->
+                <!-- pagina 7  -->
                 <child>
-                  <object class="AdwNavigationPage" id="page6">
-                    <property name="tag">page6</property>
+                  <object class="AdwNavigationPage" id="page7">
+                    <property name="tag">page7</property>
                     <property name="title">Plan diagnóstico y terapéutico</property>
                     <child>
                       <object class="GtkBox">
@@ -2235,10 +2357,10 @@
                             <property name="valign">center</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkButton" id="btn_back_to_page5">
+                              <object class="GtkButton" id="btn_back_to_page6">
                                 <property name="icon-name">go-previous-symbolic</property>
                                 <property name="margin-start">5</property>
-                                <property name="tooltip-text">Volver a página 5</property>
+                                <property name="tooltip-text">Volver a página 6</property>
                                 <style>
                                   <class name="flat"/>
                                   <class name="pill"/>

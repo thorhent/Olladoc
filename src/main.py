@@ -25,6 +25,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import OlladocWindow
 from .preferencias import PreferenciasWindow
+from . import consulta
 
 
 class OlladocApplication(Adw.Application):
@@ -37,7 +38,9 @@ class OlladocApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
-        self.modelo_IA = "Gemma3"  # Valor inicial por defecto
+        #determinar modelo por defecto el primero de la lista
+        modelos = consulta.listar_modelos_instalados()
+        self.modelo_IA = modelos[0]  # Valor inicial por defecto
 
     def do_activate(self):
         """Called when the application is activated.

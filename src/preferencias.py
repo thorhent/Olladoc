@@ -3,6 +3,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 from gi.repository import GObject
+from . import consulta
 
 class PreferenciasWindow(Adw.PreferencesWindow):
     
@@ -22,14 +23,15 @@ class PreferenciasWindow(Adw.PreferencesWindow):
         # Grupo para selección de modelo
         group = Adw.PreferencesGroup(title="Modelo de IA")
         
+        # Verificar lista de modelos instalados
+        modelos = consulta.listar_modelos_instalados()
 
         # Crear lista de opciones
-        modelos = ["Gemma3", "Llama3.2", "Phi3.5"]
         string_list = Gtk.StringList.new(modelos)
 
         
         # Obtener índice del modelo guardado, o usar 0 si no existe
-        modelo_actual = app.modelo_IA if hasattr(app, "modelo_IA") else "Gemma3"
+        modelo_actual = app.modelo_IA if hasattr(app, "modelo_IA") else modelos[0]
         try:
             index_modelo = modelos.index(modelo_actual)
         except ValueError:
@@ -47,13 +49,13 @@ class PreferenciasWindow(Adw.PreferencesWindow):
 
 
         # Grupo adicional de descripción
-        descripcion_group = Adw.PreferencesGroup(title="Sobre cada modelo")
+        descripcion_group = Adw.PreferencesGroup(title="Modelos de IA testados y recomendados")
 
         # Lista de ActionRows informativas
         rows = [
-            ("Gemma3:4b", """Modelo de Google, 4 B parámetros, rápido y eficiente, con capacidad multimodal (texto e imágenes) y buena comprensión de instrucciones."""),
-            ("Llama3.2:3b", """Modelo de Meta, 3 B parámetros, multilingüe, optimizado para diálogo y tareas generales con bajo consumo."""),
-            ("Phi3.5:3.8b", """Modelo de lenguaje desarrollado por Microsoft, perteneciente a la familia Phi. Consta de aproximadamente 3.8 mil millones de parámetros, lo que lo sitúa en la categoría de modelos ligeros, optimizados para eficiencia y despliegue en hardware con recursos limitados.""")
+            ("gemma3:4b", """Modelo de Google, 4 B parámetros, rápido y eficiente, con capacidad multimodal (texto e imágenes) y buena comprensión de instrucciones."""),
+            ("llama3.2:3b", """Modelo de Meta, 3 B parámetros, multilingüe, optimizado para diálogo y tareas generales con bajo consumo."""),
+            ("phi3.5:3.8b", """Modelo de lenguaje desarrollado por Microsoft, perteneciente a la familia Phi. Consta de aproximadamente 3.8 mil millones de parámetros, lo que lo sitúa en la categoría de modelos ligeros, optimizados para eficiencia y despliegue en hardware con recursos limitados.""")
         ]
 
         for nombre, descripcion in rows:

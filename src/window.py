@@ -22,7 +22,7 @@ from gi.repository import GLib
 
 from . import consulta, estructurar, guardar
 
-import threading, time
+import threading, time, json, re
 
 import speech_recognition as sr
 
@@ -38,13 +38,14 @@ class OlladocWindow(Adw.ApplicationWindow):
     btn_to_page4 = Gtk.Template.Child("btn_to_page4")
     btn_to_page5 = Gtk.Template.Child("btn_to_page5")
     btn_to_page6 = Gtk.Template.Child("btn_to_page6")
+    btn_to_page7 = Gtk.Template.Child("btn_to_page7")
 
     btn_back_to_page1 = Gtk.Template.Child("btn_back_to_page1")
     btn_back_to_page2 = Gtk.Template.Child("btn_back_to_page2")
     btn_back_to_page3 = Gtk.Template.Child("btn_back_to_page3")
     btn_back_to_page4 = Gtk.Template.Child("btn_back_to_page4")
     btn_back_to_page5 = Gtk.Template.Child("btn_back_to_page5")
-
+    btn_back_to_page6 = Gtk.Template.Child("btn_back_to_page6")
 
     # Pagina 1 widgets
     entry_motivo = Gtk.Template.Child("entry_motivo")
@@ -71,7 +72,14 @@ class OlladocWindow(Adw.ApplicationWindow):
     text_antecedentes_personales = Gtk.Template.Child("text_antecedentes_personales")
     text_antecedentes_familiares = Gtk.Template.Child("text_antecedentes_familiares")
 
-    # Página 4 widgets switchs
+
+    # Página 4 widgets
+    text_evaluacion_IA = Gtk.Template.Child("text_evaluacion_IA")
+    btn_evaluacion_IA = Gtk.Template.Child("btn_evaluacion_IA")
+    AdwPage4Evaluacion = Gtk.Template.Child("AdwPage4Evaluacion")
+
+
+    # Página 5 widgets switchs
     switch_fiebre = Gtk.Template.Child("switch_fiebre")
     switch_escalofrios = Gtk.Template.Child("switch_escalofrios")
     switch_sudor_nocturno = Gtk.Template.Child("switch_sudor_nocturno")
@@ -150,7 +158,7 @@ class OlladocWindow(Adw.ApplicationWindow):
     switch_poliuria_polidipsia = Gtk.Template.Child("switch_poliuria_polidipsia")
     switch_cambios_vello_corporal = Gtk.Template.Child("switch_cambios_vello_corporal")
 
-    # Pagina 5 widgets
+    # Pagina 6 widgets
     spin_fc = Gtk.Template.Child("spin_fc")
     spin_fr = Gtk.Template.Child("spin_fr")
     spin_temp = Gtk.Template.Child("spin_temp")
@@ -161,7 +169,7 @@ class OlladocWindow(Adw.ApplicationWindow):
     text_exploracion_fisica = Gtk.Template.Child("text_exploracion_fisica")
 
 
-    # Pagina 6 widgets
+    # Pagina 7 widgets
     text_solucion = Gtk.Template.Child("text_solucion")
 
     btn_generar_resumen = Gtk.Template.Child("btn_generar_resumen")
@@ -187,12 +195,14 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_to_page4.connect("clicked", self.on_to_page4)
         self.btn_to_page5.connect("clicked", self.on_to_page5)
         self.btn_to_page6.connect("clicked", self.on_to_page6)
+        self.btn_to_page7.connect("clicked", self.on_to_page7)
 
         self.btn_back_to_page1.connect("clicked", self.on_back_to_page1)
         self.btn_back_to_page2.connect("clicked", self.on_back_to_page2)
         self.btn_back_to_page3.connect("clicked", self.on_back_to_page3)
         self.btn_back_to_page4.connect("clicked", self.on_back_to_page4)
         self.btn_back_to_page5.connect("clicked", self.on_back_to_page5)
+        self.btn_back_to_page6.connect("clicked", self.on_back_to_page6)
 
         # pagina 2
         self.btn_iniciar_audio.connect("clicked", self.on_iniciar_audio)
@@ -209,12 +219,16 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_generar_historia_clinica.connect("clicked", self.on_generar_historia_clinica)
         self.btn_generar_historia_clinica.set_sensitive(False)
 
+        # pagina 4
+        self.btn_evaluacion_IA.connect("clicked", self.on_generar_evaluacion_inicial)
+        self.modelo_IA = self.get_application().modelo_IA
+        self.AdwPage4Evaluacion.set_title(f"Evaluar, sugerir y diagnosticar [{self.modelo_IA}]")
+
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
         self.btn_limpiar.set_sensitive(False)
 
         self.btn_generar_resumen.connect("clicked", self.on_generar_resumen)
-        self.modelo_IA = self.get_application().modelo_IA
         self.btn_generar_resumen.set_label(f"Consultar {self.modelo_IA}")
 
 
@@ -235,6 +249,9 @@ class OlladocWindow(Adw.ApplicationWindow):
 
     def on_to_page6(self, button):
         self.navigation_view.push_by_tag("page6")
+
+    def on_to_page7(self, button):
+        self.navigation_view.push_by_tag("page7")
 
 
     def on_back_to_page1(self, button):
@@ -257,9 +274,19 @@ class OlladocWindow(Adw.ApplicationWindow):
         page5 = self.navigation_view.find_page("page5")
         self.navigation_view.pop_to_page(page5)
 
+    def on_back_to_page6(self, button):
+        page6 = self.navigation_view.find_page("page6")
+        self.navigation_view.pop_to_page(page6)
+
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
         self.btn_generar_resumen.set_label(f"Consultar {nuevo_modelo}")
+        self.AdwPage4Evaluacion.set_title(f"Evaluar, sugerir y diagnosticar [{nuevo_modelo}]")
+
+
+    def on_generar_evaluacion_inicial(self, button):
+        print("OK")
+
 
     def on_iniciar_audio(self, button):
         if self.escuchando:
@@ -329,24 +356,48 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         self.btn_iniciar_audio.set_sensitive(True)
         self.btn_detener_audio.set_sensitive(False)
-        self.btn_generar_enfermedad_actual.set_sensitive(True)
-
-        # Guardar transcripción completa y fragmentos con timestamp
-        print("Grabación detenida.")
-        print("Texto final transcrito:", self.texto_transcrito)
-        print("Fragmentos con timestamp:")
-        for f in self.fragmentos_transcritos:
-            print(f)
+        self.btn_generar_historia_clinica.set_sensitive(True)
 
 
-    def actualizar_transcripcion(self, nuevo_texto):
-        self.texto_transcrito += " " + nuevo_texto.strip()
+
+    #def actualizar_transcripcion(self, nuevo_texto):
+        #self.texto_transcrito += " " + nuevo_texto.strip()
+
+    def limpiar_y_parsear_json(self, respuesta):
+        # Buscar el primer bloque JSON en la respuesta
+        match = re.search(r"\{[\s\S]*\}", respuesta)
+        if not match:
+            raise ValueError("No se encontró un JSON en la respuesta:\n" + respuesta)
+        bloque_json = match.group(0)
+
+        try:
+            return json.loads(bloque_json)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Error al parsear JSON: {e}\nBloque:\n{bloque_json}")
+
+
+    def normalizar_valor(self, valor):
+        if isinstance(valor, str):
+            return valor
+        elif isinstance(valor, dict):
+            # dict -> texto tipo "hipertensión: Sí, diabetes: No"
+            return "\n".join([f"{k}: {'Sí' if v else 'No'}" for k, v in valor.items()])
+        elif isinstance(valor, list):
+            # lista -> texto tipo "• Infarto (padre)\n• Diabetes (madre)"
+            return "\n".join([f"• {item}" for item in valor])
+        else:
+            return str(valor)
 
 
     def on_generar_historia_clinica(self, button):
         if not self.texto_transcrito.strip():
             self.mostrar_error("No se ha grabado ningún audio.")
             return
+        # limpiar los GtkTextViews de la anamnesis
+        self.text_enfermedad_actual.get_buffer().set_text("")
+        self.text_antecedentes_personales.get_buffer().set_text("")
+        self.text_antecedentes_familiares.get_buffer().set_text("")
+
 
         # Desactivar botones y mostrar spinner
         self.btn_generar_historia_clinica.set_sensitive(False)
@@ -374,10 +425,22 @@ class OlladocWindow(Adw.ApplicationWindow):
                     texto_estructurado
                 )
 
-                # Dividir la respuesta según las secciones y enviar a los TextViews correspondientes
+                print(respuesta)
+                dic_respuesta = self.limpiar_y_parsear_json(respuesta)
 
-                # Actualizar UI con resultado
-                GLib.idle_add(self.text_enfermedad_actual.get_buffer().set_text, respuesta)
+                # --- Actualizar los GtkTextView ---
+                GLib.idle_add(
+                    self.text_enfermedad_actual.get_buffer().set_text,
+                    self.normalizar_valor(dic_respuesta.get("enfermedad_actual", ""))
+                )
+                GLib.idle_add(
+                    self.text_antecedentes_personales.get_buffer().set_text,
+                    self.normalizar_valor(dic_respuesta.get("antecedentes_personales", ""))
+                )
+                GLib.idle_add(
+                    self.text_antecedentes_familiares.get_buffer().set_text,
+                    self.normalizar_valor(dic_respuesta.get("antecedentes_familiares", ""))
+                )
 
             except Exception as e:
                 GLib.idle_add(self.mostrar_error, str(e))
@@ -389,6 +452,7 @@ class OlladocWindow(Adw.ApplicationWindow):
                 print("Procesamiento finalizado.")
 
         threading.Thread(target=worker, daemon=True).start()
+
 
     def limpiar_campos(self, *args):
         def limpiar_textview(tv):

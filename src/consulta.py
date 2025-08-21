@@ -2,48 +2,43 @@ import requests
 from requests.exceptions import RequestException
 
 
-# Diccionario para mapear alias a nombres reales de modelos
-MODELOS_DISPONIBLES = {
-    "Gemma3": "gemma3:4b",
-    "Llama3.2": "llama3.2:3b",
-    "Phi3.5": "phi3.5:3.8b",
-}
 
-def definir_modelo_IA(modelo):
-    return MODELOS_DISPONIBLES.get(modelo, modelo)
+def listar_modelos_instalados():
+    url = "http://localhost:11434/api/tags"
+    response = requests.get(url)
+    if response.status_code == 200:
+        datos = response.json()
+        # Extraer solo los nombres
+        modelos = [m["name"] for m in datos["models"]]
+        return modelos
+    else:
+        raise Exception("Error consultando API de Ollama:", response.text)
 
 
-def generar_historia_clinica_ollama(modelo_IA, texto_transcrito):
-    modelo = definir_modelo_IA(modelo_IA)
-
+def generar_historia_clinica_ollama(modelo, texto_transcrito):
     prompt = f"""Eres un médico clínico experto en historia clínica. Recibirás a continuación la transcripción de una entrevista entre un médico y un paciente, incluyendo tanto las preguntas del médico como las respuestas del paciente.
 
-    Tu tarea es:
+Tu tarea es redactar de forma completa y profesional la enfermedad actual, los antecedentes personales y los antecedentes familiares en un JSON válido solo con estas claves exactas:
 
-    1. Redactar la sección **Enfermedad actual** de la historia clínica.
+{{
+  "enfermedad_actual": "...",
+  "antecedentes_personales": "...",
+  "antecedentes_familiares": "..."
+}}
 
-    2. Redactar la sección **Antecedentes personales** de la historia clínica.
+No incluyas explicaciones ni texto fuera del JSON. Respetar "clave": "string".
 
-    3. Redactar la sección **Antecedentes familiares** de la historia clínica.
+Transcripción de la entrevista:
 
-    4. Evaluar la historia clínica, sugerir diagnóstico presuntivo y preguntas adicionales para completar la historia clínica.
+{texto_transcrito}
+"""
 
-    ---
-
-    Transcripción de la entrevista:
-
-    {texto_transcrito}
-    """
 
     response = llamar_ollama(modelo, prompt)
     return response
 
 
-def generar_diagnostico_completo_ollama(modelo_IA, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion):
-
-    modelo = definir_modelo_IA(modelo_IA)
-
-
+def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion):
     # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo
     prompt = f"""Eres un médico clínico meticuloso. Debes generar de modo conciso un diagnóstico más probable, diagnóstico diferencial y estudios complementarios para confirmar diagnóstico basado en los posteriores datos clínicos que te doy.
 
