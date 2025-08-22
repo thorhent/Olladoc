@@ -5,9 +5,9 @@
   <project_license>Apache-2.0</project_license>
 
   <name>Olladoc</name>
-  <summary>Historia clínica médica por voz e IA</summary>
+  <summary>Historia clínica médica con apoyo de IA</summary>
   <description>
-    <p>Olladoc es una aplicación médica moderna desarrollada con GTK 4 y libadwaita. Permite generar historias clínicas estructuradas mediante entrada por voz, inteligencia artificial y una interfaz limpia y profesional.</p>
+    <p>Olladoc es una aplicación médica moderna desarrollada con Python, GTK 4 y libadwaita. Permite generar historias clínicas estructuradas mediante entrada por voz o teclado, donde se puede tomar decisiones con apoyo de inteligencia artificial.</p>
     <p>Diseñada para estimular y facilitar la continua producción de una historia clínica completa y adecuada según los criterios más rigurosos de investigación médica. La herramienta tiene el potencial para aumentar la eficiencia médica, reducir los errores y con eso beneficiar a los pacientes.</p>
   </description>
 
