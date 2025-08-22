@@ -10,7 +10,7 @@
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland",
-        "--device=all",
+        "--device=dri",
         "--socket=pulseaudio"
     ],
     "cleanup" : [

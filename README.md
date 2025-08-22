@@ -42,3 +42,33 @@ flatpak-builder --force-clean build-dir com.github.thorhent.Olladoc
 flatpak-builder --run build-dir com.github.thorhent.Olladoc olladoc
 flatpak-builder --user --force-clean --install build-dir com.github.thorhent.Olladoc
 
+---
+
+## 🐑 Cómo instalar Ollama y modelos
+
+Olladoc depende de [Ollama](https://ollama.com/) para ejecutar modelos de lenguaje localmente.  
+A continuación se explican los pasos de instalación en Fedora (recomendado) y en Ubuntu/Debian.
+
+---
+
+### 🔹 Fedora (42)
+
+```bash
+sudo dnf install ollama 
+
+### 🔹 Ubuntu/Debian
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+
+### Instalar modelos ollama 
+
+Recomendados y testados en computadora sin GPU con 8GB de RAM (phi3.5:3.8b; gemma3:4b y llama3.2:3b)
+
+```bash
+ollama pull phi3.5:3.8b
+ollama pull gemma3:4b
+ollama pull llama3.2:3b
+
+
+

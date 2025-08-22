@@ -30,7 +30,7 @@
   <!-- URLs of this type should point to a webpage showing information on how to donate to the described software project -->
   <!--<url type="donation">https://example.org/donate</url>-->
   <!-- This could for example be an HTTPS URL to an online form or a page describing how to contact the developer -->
-  <url type="contact">mailto:tbmeurer@gmail.com</url>
+  <url type="contact">https://github.com/thorhent/Olladoc/issues</url>
   <!-- URLs of this type should point to a webpage showing information on how to contribute to the described software project -->
   <!--<url type="contribute">https://example.org/contribute</url>-->
 
@@ -74,8 +74,8 @@
 
 
   <releases>
-    <release version="0.8.25" date="2025-08-07">
-      <url type="details">https://example.org/changelog.html#version_1.0.1</url>
+    <release version="0.8.25" date="2025-08-22">
+      <url type="details"></url>
       <description>
         <p>Primera versión pública estable. Incluye:</p>
         <ul>

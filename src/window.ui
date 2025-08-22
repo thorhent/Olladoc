@@ -1932,7 +1932,7 @@
 
                                             <child>
                                               <object class="AdwActionRow">
-                                                <property name="title">Alucionaciones</property>
+                                                <property name="title">Alucinaciones</property>
                                                 <property name="margin-start">20</property>
                                                 <child>
                                                   <object class="GtkSwitch" id="switch_alucinaciones">

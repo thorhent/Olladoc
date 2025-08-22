@@ -58,7 +58,7 @@ Datos de anamnesis:
     respuesta = llamar_ollama(modelo, prompt)
     return respuesta
 
-def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion):
+def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, revision_sistemas, exploracion):
     # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo
     prompt = f"""Eres un médico clínico meticuloso. Debes generar de modo conciso un diagnóstico más probable, diagnóstico diferencial y estudios complementarios para confirmar diagnóstico basado en los posteriores datos clínicos que te doy.
 
@@ -84,6 +84,9 @@ Datos clínicos:
 - Antecedentes:
 {antecedentes}
 
+- Revisión por sistemas:
+{revision_sistemas}
+
 - Exploración física:
 {exploracion}
 """
@@ -103,7 +106,7 @@ def llamar_ollama(modelo, prompt):
                 "stream": False
             },
             stream=False,
-            timeout=720  # Aumentar el tiempo de espera a 12 minutos
+            timeout=480  # tiempo de espera 8 minutos
 
         ) as response:
             if response.ok:

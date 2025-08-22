@@ -564,7 +564,10 @@ class OlladocWindow(Adw.ApplicationWindow):
         limpiar_textview(self.text_antecedentes_personales)
         limpiar_textview(self.text_antecedentes_familiares)
 
-        # Página 4
+        # Pagina 4
+        limpiar_textview(self.text_evaluacion_IA)
+
+        # Página 5
         for attr in dir(self):
             if attr.startswith("switch_"):
                 getattr(self, attr).set_active(False)
@@ -645,6 +648,20 @@ class OlladocWindow(Adw.ApplicationWindow):
         enfermedad_actual = self.get_text_from_view(self.text_enfermedad_actual)
         antecedentes = self.get_text_from_view(self.text_antecedentes_personales) + "\n" + self.get_text_from_view(self.text_antecedentes_familiares)
 
+
+        sintomas_activados = []
+
+        # Itera sobre todos los atributos de la clase que son Gtk.Switch
+        # y que tienen un nombre que empieza con 'switch_'
+        for var_name, switch in self.__dict__.items():
+            if isinstance(switch, Gtk.Switch) and var_name.startswith("switch_"):
+                # Si el switch está activo
+                if switch.get_active():
+                    # Obtiene el nombre del síntoma limpiando el prefijo
+                    # Por ejemplo: 'switch_fiebre' -> 'fiebre' -> 'Fiebre'
+                    sintoma_nombre = var_name.replace("switch_", "").replace("_", " ").title()
+                    sintomas_activados.append(sintoma_nombre)
+
         #recoger signos vitales
         fc = self.spin_fc.get_value_as_int()
         fr = self.spin_fr.get_value_as_int()
@@ -655,7 +672,6 @@ class OlladocWindow(Adw.ApplicationWindow):
         exploracion = f"{signos_vitales} \n "+ self.get_text_from_view(self.text_exploracion_fisica)
 
         modelo_IA = getattr(self.get_application(), "modelo_IA", None)
-        print(modelo_IA)
 
         self.btn_generar_resumen.set_sensitive(False)
         self.spinner_resumen.start()
@@ -670,6 +686,7 @@ class OlladocWindow(Adw.ApplicationWindow):
             "Motivo consulta": motivo_consulta,
             "Enfermedad actual": enfermedad_actual,
             "Antecedentes": antecedentes,
+            "Revisión por sistemas": ", ".join(sintomas_activados),
             "Exploración": exploracion,
             "Solución": "",
         }
@@ -677,7 +694,14 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         def worker():
             try:
-                respuesta =  consulta.generar_diagnostico_completo_ollama(modelo_IA, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion)
+                respuesta =  consulta.generar_diagnostico_completo_ollama(modelo_IA,
+                    datos_personales,
+                    motivo_consulta,
+                    enfermedad_actual,
+                    antecedentes,
+                    ", ".join(sintomas_activados),
+                    exploracion
+                )
 
                 GLib.idle_add(buffer.set_text, respuesta)
                 #GLib.idle_add(self.mostrar_respuesta, respuesta)
