@@ -37,6 +37,26 @@ Transcripción de la entrevista:
     response = llamar_ollama(modelo, prompt)
     return response
 
+def generar_diagnostico_parcial_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes):
+    prompt = f"""Como médico clínico, realizar diagnóstico inicial fundamentado e sugerir recomendaciones basado en los datos siguientes de la anamnesis.
+
+Datos de anamnesis:
+
+- Datos personales:
+{datos_personales}
+
+- Motivo de consulta:
+{motivo_consulta}
+
+- Enfermedad actual:
+{enfermedad_actual}
+
+- Antecedentes:
+{antecedentes}
+"""
+
+    respuesta = llamar_ollama(modelo, prompt)
+    return respuesta
 
 def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion):
     # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo

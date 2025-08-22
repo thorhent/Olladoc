@@ -77,7 +77,7 @@ class OlladocWindow(Adw.ApplicationWindow):
     text_evaluacion_IA = Gtk.Template.Child("text_evaluacion_IA")
     btn_evaluacion_IA = Gtk.Template.Child("btn_evaluacion_IA")
     AdwPage4Evaluacion = Gtk.Template.Child("AdwPage4Evaluacion")
-
+    spinner_evaluacion_IA = Gtk.Template.Child("spinner_evaluacion_IA")
 
     # Página 5 widgets switchs
     switch_fiebre = Gtk.Template.Child("switch_fiebre")
@@ -204,6 +204,16 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_back_to_page5.connect("clicked", self.on_back_to_page5)
         self.btn_back_to_page6.connect("clicked", self.on_back_to_page6)
 
+        # Conectar eventos de cambio de texto o selección
+        self.entry_nombre.connect("changed", self.validar_anamnesis)
+        self.entry_edad.connect("changed", self.validar_anamnesis)
+        self.entry_ocupacion.connect("changed", self.validar_anamnesis)  # opcional, pero refresca validación
+        self.entry_motivo.connect("changed", self.validar_anamnesis)
+
+        self.text_enfermedad_actual.get_buffer().connect("changed", self.validar_anamnesis)
+        self.text_antecedentes_personales.get_buffer().connect("changed", self.validar_anamnesis)
+        self.text_antecedentes_familiares.get_buffer().connect("changed", self.validar_anamnesis)
+
         # pagina 2
         self.btn_iniciar_audio.connect("clicked", self.on_iniciar_audio)
         self.btn_detener_audio.connect("clicked", self.on_detener_audio)
@@ -221,8 +231,9 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         # pagina 4
         self.btn_evaluacion_IA.connect("clicked", self.on_generar_evaluacion_inicial)
+        self.btn_evaluacion_IA.set_sensitive(False)  # Deshabilitado al inicio
         self.modelo_IA = self.get_application().modelo_IA
-        self.AdwPage4Evaluacion.set_title(f"Evaluar, sugerir y diagnosticar [{self.modelo_IA}]")
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial y recomendaciones [{self.modelo_IA}]")
 
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
@@ -281,11 +292,78 @@ class OlladocWindow(Adw.ApplicationWindow):
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
         self.btn_generar_resumen.set_label(f"Consultar {nuevo_modelo}")
-        self.AdwPage4Evaluacion.set_title(f"Evaluar, sugerir y diagnosticar [{nuevo_modelo}]")
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial y recomendaciones [{nuevo_modelo}]")
 
+    def validar_anamnesis(self, *args):
+        """Habilita el botón solo si los datos básicos están completos (ocupación opcional)."""
+        nombre = self.entry_nombre.get_text().strip()
+        edad = self.entry_edad.get_text().strip()
+        ocupacion = self.entry_ocupacion.get_text().strip()  # opcional
+        motivo = self.entry_motivo.get_text().strip()
+
+        enfermedad_actual = self.get_text_from_view(self.text_enfermedad_actual).strip()
+        antecedentes_pers = self.get_text_from_view(self.text_antecedentes_personales).strip()
+        antecedentes_fam = self.get_text_from_view(self.text_antecedentes_familiares).strip()
+
+        # Lista de campos obligatorios (ocupación NO incluida)
+        campos_ok = all([
+            nombre, edad, motivo,
+            enfermedad_actual, antecedentes_pers, antecedentes_fam
+        ])
+
+        self.btn_evaluacion_IA.set_sensitive(campos_ok)
 
     def on_generar_evaluacion_inicial(self, button):
-        print("OK")
+        motivo_consulta = self.entry_motivo.get_text()
+        enfermedad_actual = self.get_text_from_view(self.text_enfermedad_actual)
+        antecedentes = self.get_text_from_view(self.text_antecedentes_personales) + "\n" + self.get_text_from_view(self.text_antecedentes_familiares)
+
+        #datos personales
+        nombre = self.entry_nombre.get_text()
+        edad = self.entry_edad.get_text()
+        ocupacion = self.entry_ocupacion.get_text()
+
+
+        selected_index_sexo = self.entry_sexo.get_selected()
+        if selected_index_sexo != -1:
+            sexo = self.entry_sexo.get_model().get_string(selected_index_sexo)
+        else:
+            sexo = ""
+
+        selected_index_estado = self.entry_estado_civil.get_selected()
+        if selected_index_estado != -1:
+            estado_civil = self.entry_estado_civil.get_model().get_string(selected_index_estado)
+            if sexo == "Femenino" and estado_civil.endswith("o"):
+                estado_civil = estado_civil[:-1] + "a"  # Cambiar a femenino si es necesario
+        else:
+            estado_civil = ""
+
+        datos_personales = f"Nombre: {nombre}, Edad: {edad}, Sexo: {sexo}, Estado Civil: {estado_civil}, Ocupación: {ocupacion}"
+
+        buffer = self.text_evaluacion_IA.get_buffer()
+        buffer.set_text("")
+
+        self.btn_evaluacion_IA.set_sensitive(False)
+        self.spinner_evaluacion_IA.set_visible(True)
+        self.spinner_evaluacion_IA.start()
+
+
+        def worker():
+            try:
+                respuesta = consulta.generar_diagnostico_parcial_ollama(self.modelo_IA, datos_personales, motivo_consulta, enfermedad_actual, antecedentes)
+
+                GLib.idle_add(buffer.set_text, respuesta)
+
+            except Exception as e:
+                GLib.idle_add(self.mostrar_error, str(e))
+            finally:
+                GLib.idle_add(self.btn_evaluacion_IA.set_sensitive, True)
+                self.spinner_evaluacion_IA.stop()
+
+
+        threading.Thread(target=worker, daemon=True).start()
+
+
 
 
     def on_iniciar_audio(self, button):
@@ -577,7 +655,7 @@ class OlladocWindow(Adw.ApplicationWindow):
         exploracion = f"{signos_vitales} \n "+ self.get_text_from_view(self.text_exploracion_fisica)
 
         modelo_IA = getattr(self.get_application(), "modelo_IA", None)
-
+        print(modelo_IA)
 
         self.btn_generar_resumen.set_sensitive(False)
         self.spinner_resumen.start()

@@ -653,7 +653,7 @@
                                   <object class="AdwPreferencesPage">
                                     <child>
                                       <object class="AdwPreferencesGroup">
-                                        <property name="title">Evaluación, diagnóstico inicial y sugerencias</property>
+                                        <property name="title">Diagnóstico inicial y recomendaciones</property>
 
                                         <child>
                                           <object class="AdwPreferencesRow">
@@ -681,8 +681,18 @@
 
                                         <child>
                                           <object class="AdwActionRow" id="AdwPage4Evaluacion">
-                                            <property name="title">Evaluar, sugerir y diagnosticar</property>
-                                            <property name="subtitle">Consulta modelo IA para obtener una evaluación de la historia clínica, algunas sugerencias y diagnóstico inicial</property>
+                                            <property name="title">Consultar para diagnóstico inicial y recomendaciones</property>
+                                            <property name="subtitle">El diagnóstico puede estar equivocado, por tanto siempre evaluar con atención las respuestas</property>
+
+                                            <!-- Spinner -->
+                                            <child>
+                                              <object class="GtkSpinner" id="spinner_evaluacion_IA">
+                                                <property name="visible">False</property>
+                                                <property name="valign">center</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+
                                             <child>
                                               <object class="GtkButton" id="btn_evaluacion_IA">
                                                 <property name="label">Consultar</property>
