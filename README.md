@@ -41,15 +41,21 @@ Para construir el proyecto Flatpak desde cero y limpiar cualquier compilación a
 
 ```bash
 flatpak-builder --force-clean build-dir com.github.thorhent.Olladoc
+```
 
 Ejecutar el proyecto Flatpak
 Una vez que el proyecto esté construido, puedes ejecutar la aplicación directamente desde el directorio de compilación:
 
+```bash
 flatpak-builder --run build-dir com.github.thorhent.Olladoc olladoc
+
+```
+
 
 Instalar el proyecto Flatpak (para el usuario actual)
 Para instalar el proyecto Flatpak en tu sistema (solo para el usuario actual) y limpiar cualquier compilación anterior antes de la instalación:
 
+```bash
 flatpak-builder --user --force-clean --install build-dir com.github.thorhent.Olladoc
 
 ```
