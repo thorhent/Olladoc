@@ -165,7 +165,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/thorhent/Olladoc.git",
-                    "branch" : "master"
+                    "tag" : "v1.9.25",
+		    "commit" : "b864e62ea55fb2193e0e32f4f1d34021b677b59f"
                 }
             ]
         }
