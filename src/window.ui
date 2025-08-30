@@ -1,0 +1,2586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gio" version="2.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.7"/>
+  <template class="OlladocWindow" parent="AdwApplicationWindow">
+    <property name="title" translatable="yes">Olladoc</property>
+    <property name="default-width">1200</property>
+    <property name="default-height">650</property>
+    <property name="content">
+      <!-- agregar AdwToastOverlay -->
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <child>
+          <object class="AdwToolbarView">
+            <property name="content">
+              <object class="AdwNavigationView" id="navigation_view">
+                <child>
+                  <object class="AdwNavigationPage" id="page1">
+                    <property name="tag">page1</property>
+                    <property name="title">Página 1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Motivo de consulta</property>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_motivo">
+                                        <property name="title">Motivo</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Datos del paciente</property>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_nombre">
+                                        <property name="title">Nombre completo</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_dni">
+                                        <property name="title">DNI</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_edad">
+                                        <property name="title">Edad</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_direccion">
+                                        <property name="title">Dirección</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_ocupacion">
+                                        <property name="title">Ocupación</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwComboRow" id="entry_sexo">
+                                        <property name="model">
+                                          <object class="GtkStringList">
+                                            <items>
+                                              <item>Masculino</item>
+                                              <item>Femenino</item>
+                                              <item>No especifica</item>
+                                            </items>
+                                          </object>
+                                        </property>
+                                        <property name="title">Sexo</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwComboRow" id="entry_estado_civil">
+                                        <property name="model">
+                                          <object class="GtkStringList">
+                                            <items>
+                                              <item>Soltero</item>
+                                              <item>Casado</item>
+                                              <item>Unión convivencial</item>
+                                              <item>Separado</item>
+                                              <item>Divorciado</item>
+                                              <item>Viudo</item>
+                                            </items>
+                                          </object>
+                                        </property>
+                                        <property name="title">Estado civil</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_telefono">
+                                        <property name="title">Teléfono</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="AdwEntryRow" id="entry_email">
+                                        <property name="title">Email</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page2">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 2</property>
+                                <property name="valign">center</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- pagina 2 -->
+                <child>
+                  <object class="AdwNavigationPage" id="page2">
+                    <property name="tag">page2</property>
+                    <property name="title">Enfermedad actual</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page1">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 1</property>
+                                <style>
+                                  <class name="pill"/>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-end">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+                                <child>
+                                  <object class="AdwPreferencesPage">
+                                    <child>
+                                      <object class="AdwPreferencesGroup">
+                                        <property name="title">Enfermedad actual</property>
+
+                                        <child>
+                                          <object class="AdwExpanderRow">
+                                            <property name="title">Guía para redactar la enfermedad actual</property>
+                                            <property name="icon-name">dialog-information-symbolic</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Fecha de inicio y comienzo</property>
+                                                <property name="subtitle">¿Cuándo comenzaron los síntomas? ¿Fue un inicio brusco o progresivo?</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Características del síntoma principal</property>
+                                                <property name="subtitle">Tipo de dolor, localización, irradiación, intensidad, duración.</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Evolución temporal</property>
+                                                <property name="subtitle">¿Ha mejorado, empeorado o persistido? ¿Cómo ha cambiado?</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Factores relacionados</property>
+                                                <property name="subtitle">¿Qué agrava o alivia los síntomas? Ej.: esfuerzo, reposo, medicación.</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Tratamientos previos</property>
+                                                <property name="subtitle">¿Usó medicación o terapias? ¿Hubo alguna respuesta?</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Síntomas acompañantes</property>
+                                                <property name="subtitle">Fiebre, náuseas, vómitos, disnea, etc.</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Síntomas negados relevantes</property>
+                                                <property name="subtitle">Mencionar lo que **no** presenta: palpitaciones, sangrado, etc.</property>
+                                                <property name="activatable">False</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+
+                                        <child>
+                                          <object class="AdwPreferencesRow">
+                                            <property name="title">Descripción</property>
+                                            <child>
+                                              <object class="GtkTextView" id="text_enfermedad_actual">
+                                                <property name="bottom-margin">5</property>
+                                                <!-- Aproximadamente caracteres con fuente monoespaciada -->
+                                                <property name="height-request">300</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="justification">fill</property>
+                                                <property name="left-margin">5</property>
+                                                <property name="monospace">True</property>
+                                                <property name="pixels-above-lines">5</property>
+                                                <property name="pixels-below-lines">5</property>
+                                                <property name="vexpand">False</property>
+                                                <property name="width-request">340</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+
+                                        <child>
+                                          <object class="AdwActionRow">
+                                            <property name="title">Entrada de audio</property>
+                                            <property name="subtitle">Grabar entrevista clínica por voz</property>
+                                            <child>
+                                              <object class="GtkButton" id="btn_iniciar_audio">
+                                                <property name="label"></property>
+                                                <property name="margin-top">15</property>
+                                                <property name="margin-bottom">15</property>
+                                                <property name="icon-name">audio-input-microphone-symbolic</property>
+                                                <property name="tooltip-text">Capturar respuesta por voz</property>
+                                                <style>
+                                                  <class name="pill"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkButton" id="btn_detener_audio">
+                                                <property name="label"></property>
+                                                <property name="margin-top">15</property>
+                                                <property name="margin-bottom">15</property>
+                                                <property name="tooltip-text">Finalizar captura de voz</property>
+                                                <property name="icon-name">media-playback-stop-symbolic</property>
+                                                <style>
+                                                  <class name="pill"/>
+                                                  <class name="destructive-action"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <!-- GtkBox para botón de generar enfermedad actual + spinner -->
+                                        <child>
+                                          <object class="GtkBox" id="box_btn_spinner">
+                                            <property name="orientation">horizontal</property>
+                                            <property name="spacing">10</property>
+                                            <property name="halign">end</property>
+                                            <property name="margin-top">10</property>
+
+                                            <!-- Spinner -->
+                                            <child>
+                                              <object class="GtkSpinner" id="spinner_historia_clinica">
+                                                <property name="visible">False</property>
+                                                <property name="valign">center</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+
+
+                                            <!-- Botón generar enfermedad actual -->
+                                            <child>
+                                              <object class="GtkButton" id="btn_generar_historia_clinica">
+                                                <property name="label">Procesar audio</property>
+
+                                                <property name="tooltip-text">Usar captura de audio para redactar narración médica</property>
+                                                <style>
+                                                  <class name="pill"/>
+                                                  <class name="suggested-action"/>
+                                                </style>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+
+
+
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page3">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 3</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- pagina 3 -->
+
+                <child>
+                  <object class="AdwNavigationPage" id="page3">
+                    <property name="tag">page3</property>
+                    <property name="title">Antecedentes</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+
+                        <!-- Botón volver -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page2">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 2</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Contenido principal -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">20</property>
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="vexpand">True</property>
+
+                            <!-- Antecedentes personales -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Antecedentes personales</property>
+
+                                    <!-- Guía expandible -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Guía</property>
+                                        <child>
+                                          <object class="AdwExpanderRow">
+                                            <property name="title">Guía para antecedentes personales</property>
+                                            <property name="icon-name">dialog-information-symbolic</property>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">4</property>
+
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Antecedentes médicos</property>
+                                                    <property name="subtitle">Enfermedades crónicas, infecciones previas, alergias</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Cirugías e internaciones</property>
+                                                    <property name="subtitle">Qué tipo, cuándo, complicaciones si las hubo</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Gineco-obstétricos (en mujeres)</property>
+                                                    <property name="subtitle">Menarca, ciclos menstruales, FUM, gestas, partos, abortos, métodos anticonceptivos</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Vacunación</property>
+                                                    <property name="subtitle">Evaluar necesidad y posibilidad de vacunar</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Hábitos</property>
+                                                    <property name="subtitle">Tabaco, alcohol, drogas, alimentación, sueño, ejercicio</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Ocupación</property>
+                                                    <property name="subtitle">Riesgos laborales, exposición ambiental</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+                                    <!-- Campo de texto -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Redacción</property>
+                                        <child>
+                                          <object class="GtkTextView" id="text_antecedentes_personales">
+                                            <property name="bottom-margin">5</property>
+                                            <property name="height-request">300</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="justification">fill</property>
+                                            <property name="left-margin">5</property>
+                                            <property name="monospace">True</property>
+                                            <property name="pixels-above-lines">5</property>
+                                            <property name="pixels-below-lines">5</property>
+                                            <property name="vexpand">False</property>
+                                            <property name="width-request">340</property>
+                                            <property name="wrap-mode">word-char</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <!-- Antecedentes familiares -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Antecedentes familiares</property>
+
+
+                                    <!-- Guía expandible -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Guía</property>
+                                        <child>
+                                          <object class="AdwExpanderRow">
+                                            <property name="title">Guía para antecedentes familiares</property>
+                                            <property name="icon-name">dialog-information-symbolic</property>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">4</property>
+
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Enfermedades hereditarias</property>
+                                                    <property name="subtitle">Cardiopatías, diabetes, cáncer, hipertensión, etc.</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Parentesco afectado</property>
+                                                    <property name="subtitle">Especificar si afecta a padres, abuelos, hermanos</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Antecedentes psiquiátricos o neurológicos</property>
+                                                    <property name="subtitle">Epilepsia, trastornos del ánimo, demencias, etc.</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Campo de texto -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Redacción</property>
+                                        <child>
+                                          <object class="GtkTextView" id="text_antecedentes_familiares">
+                                            <property name="bottom-margin">5</property>
+                                            <property name="height-request">300</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="justification">fill</property>
+                                            <property name="left-margin">5</property>
+                                            <property name="monospace">True</property>
+                                            <property name="pixels-above-lines">5</property>
+                                            <property name="pixels-below-lines">5</property>
+                                            <property name="vexpand">False</property>
+                                            <property name="width-request">340</property>
+                                            <property name="wrap-mode">word-char</property>
+                                            <property name="margin-start">5</property>
+                                            <property name="margin-end">5</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Botón siguiente -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page4">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 4</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <!-- Pagina 4 evaluación de la HC -->
+
+                <child>
+                  <object class="AdwNavigationPage" id="page4">
+                    <property name="tag">page4</property>
+                    <property name="title">Evaluación de la historia clínica</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page3">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 3</property>
+                                <style>
+                                  <class name="pill"/>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-end">12</property>
+                                <property name="margin-start">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+                                <child>
+                                  <object class="AdwPreferencesPage">
+                                    <child>
+                                      <object class="AdwPreferencesGroup">
+                                        <property name="title">Diagnóstico inicial y recomendaciones</property>
+
+                                        <child>
+                                          <object class="AdwPreferencesRow">
+                                            <property name="title">Descripción</property>
+                                            <child>
+                                              <object class="GtkTextView" id="text_evaluacion_IA">
+                                                <property name="bottom-margin">5</property>
+                                                <!-- Aproximadamente caracteres con fuente monoespaciada -->
+                                                <property name="height-request">300</property>
+                                                <property name="hexpand">True</property>
+                                                <property name="justification">fill</property>
+                                                <property name="left-margin">5</property>
+                                                <property name="monospace">True</property>
+                                                <property name="pixels-above-lines">5</property>
+                                                <property name="pixels-below-lines">5</property>
+                                                <property name="vexpand">False</property>
+                                                <property name="width-request">340</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                        <child>
+                                          <object class="AdwActionRow" id="AdwPage4Evaluacion">
+                                            <property name="title">Consultar para diagnóstico inicial y recomendaciones</property>
+                                            <property name="subtitle">El diagnóstico puede estar equivocado, por tanto siempre evaluar con atención las respuestas</property>
+
+                                            <!-- Spinner -->
+                                            <child>
+                                              <object class="GtkSpinner" id="spinner_evaluacion_IA">
+                                                <property name="visible">False</property>
+                                                <property name="valign">center</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="GtkButton" id="btn_evaluacion_IA">
+                                                <property name="label">Consultar</property>
+                                                <property name="margin-top">15</property>
+                                                <property name="margin-bottom">15</property>
+                                                <property name="tooltip-text">El prompt de la consulta está compuesto por motivo de consulta, algunos datos personales, enfermedad actual y antecedentes</property>
+                                                <style>
+                                                  <class name="pill"/>
+                                                  <class name="suggested-action"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page5">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 5</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+
+                <!-- Pagina 5: Revisión por Sistemas -->
+                <child>
+                  <object class="AdwNavigationPage" id="page5">
+                    <property name="tag">page5</property>
+                    <property name="title">Revisión por sistemas</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+
+                        <!-- Botón volver -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page4">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 4</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Contenido principal -->
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">never</property>
+                            <property name="vscrollbar-policy">automatic</property>
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Revisión por sistemas</property>
+
+                                    <!-- Constitucional: general -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Constitucionales (generales)</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Fiebre</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_fiebre">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Escalofríos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_escalofrios">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Sudoración nocturna</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_sudor_nocturno">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Pérdida de peso</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_perdida_peso">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Fatiga</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_fatiga">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Malestar general</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_malestar_general">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Piel  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Piel</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios en la piel (erupciones, prurito, cambios de color)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_piel">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Úlceras</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_ulceras">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios en uñas o cabello</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_cabello_unhas">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Ojos  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Ojos</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Disminución de la agudeza visual</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_menor_agudeza_visual">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor ocular</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_ocular">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Fotofobia</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_fotofobia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Visión doble</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_vision_doble">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Lagrimeo</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_lagrimeo">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Oídos  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Oídos</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Hipoacusia (disminución auditiva)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_hipoacusia">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Tinnitus (zumbido)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_tinnitus">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Otalgia (dolor de oído)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_otalgia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Secreción</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_secrecion">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Nariz y senos paranasales  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Nariz y senos paranasales</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Congestión nasal</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_congestion_nasal">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Rinorrea</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_rinorrea">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Epistaxis</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_epistaxis">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Estornudos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_estornudos">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor facial</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_facial">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Boca y garganta  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Boca y garganta</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor de garganta</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_garganta">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Aftas</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_aftas">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Sangrado de encías</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_sangrado_encias">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Disfonía</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_disfonia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Mal aliento</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_mal_aliento">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Cuello  -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Cuello</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor o rigidez</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_rigidez_cuello">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Masas</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_masas_cuello">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Ganglios palpables</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_ganglios_palpables_cuello">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+
+
+                                    <!-- Ejemplo: Sistema Respiratorio -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Respiratorio</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Tos (seca o con expectoración)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_tos">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Disnea (de esfuerzo o reposo)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_disnea">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Sibilancias</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_sibilancias">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Hemoptisis</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_hemoptisis">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor torácico</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_toracico">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema cardiovascular -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Cardiovascular</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor precordial</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_precordial">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Palpitaciones</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_palpitaciones">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Disnea paroxística nocturna</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_disnea_paroxistica_nocturna">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Ortopnea</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_ortopnea">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Edemas periféricos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_edemas_perifericos">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Claudicación intermitente</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_claudicacion_intermitente">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+                                    <!-- Sistema digestivo -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Gastrointestinal</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Náuseas/vómitos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_vomitos">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor abdominal</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_abdominal">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios en el apetito</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_apetito">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Pirosis (acidez)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_pirosis">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Diarrea/estreñimiento</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_diarrea_constipacion">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Hematoquecia/melenas</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_hematoquecia_melenas">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Distensión</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_distension_abdominal">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Ictericia</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_ictericia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema genitourinario -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Genitourinario</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Disuria</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_disuria">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Polaquiuria</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_polaquiuria">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Hematuria</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_hematuria">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Incontinencia urinaria</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_incontinencia_urinaria">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Flujo vaginal</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_flujo_vaginal">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor pélvico</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dolor_pelvico">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dificultad para iniciar micción</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_dificultad_iniciar_miccion">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema musculoesqueletico -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Musculoesquelético</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor articular</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_artralgia">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Dolor muscular</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_mialgia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Inflamación articular</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_inflamacion_articular">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Rigidez matutina</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_rigidez_matutina">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Limitación de movimientos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_menor_movimientos_articulares">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema nervioso -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Neurológico</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Mareos</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_mareos">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Parestesias</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_parestesias">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Convulsiones</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_convulsiones">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Debilidad muscular</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_debilidad_muscular">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Alteración de la marcha</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_alteracion_marcha">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios en la memoria o concentración</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_memoria_concentracion">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema psiquiátrico -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Psiquiátrico</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Estado de ánimo (depresión, ansiedad)</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_estado_animo">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Trastornos del sueño</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_insomnio">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Alucinaciones</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_alucinaciones">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Ideación suicida</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_ideacion_suicida">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Sistema Endocrino -->
+                                    <child>
+                                      <object class="AdwExpanderRow">
+                                        <property name="title">Endocrino</property>
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">5</property>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Intolerancia al frío</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_intolerancia_frio">
+                                                      <property name="margin-bottom">10</property>
+                                                      <property name="margin-end">5</property>
+                                                      <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Intolerancia al calor</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_intolerancia_calor">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios de peso</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_peso">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Poliuria/polidipsia</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_poliuria_polidipsia">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                            <child>
+                                              <object class="AdwActionRow">
+                                                <property name="title">Cambios en el vello corporal</property>
+                                                <property name="margin-start">20</property>
+                                                <child>
+                                                  <object class="GtkSwitch" id="switch_cambios_vello_corporal">
+                                                    <property name="margin-bottom">10</property>
+                                                    <property name="margin-end">5</property>
+                                                    <property name="margin-top">10</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+
+                        <!-- Botón siguiente -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page6">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 6</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+
+                <!-- Página 6 Exploracion fisica -->
+                <child>
+                  <object class="AdwNavigationPage" id="page6">
+                    <property name="tag">page6</property>
+                    <property name="title">Exploración física</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+
+                        <!-- Botón volver -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page5">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 5</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Contenido principal -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">20</property>
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="vexpand">True</property>
+
+                            <!-- Columna izquierda: signos vitales -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Signos vitales</property>
+
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Frecuencia cardíaca (lpm)</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spin_fc">
+                                            <property name="adjustment">adjust_fc</property>
+                                            <property name="numeric">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Frecuencia respiratoria (rpm)</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spin_fr">
+                                            <property name="adjustment">adjust_fr</property>
+                                            <property name="numeric">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Presión arterial (mmHg)</property>
+                                        <child>
+                                          <object class="GtkEntry" id="entry_pa">
+                                            <property name="placeholder-text">Ej: 120/80</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Temperatura (°C)</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spin_temp">
+                                            <property name="adjustment">adjust_temp</property>
+                                            <property name="numeric">True</property>
+                                            <property name="digits">1</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <child>
+                                      <object class="AdwActionRow">
+                                        <property name="title">Saturación O₂ (%)</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="spin_sat">
+                                            <property name="adjustment">adjust_sat</property>
+                                            <property name="numeric">True</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                    <!-- Guía expandible -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <property name="title">Guía</property>
+                                        <child>
+                                          <object class="AdwExpanderRow">
+                                            <property name="title">Guía para exploración física</property>
+                                            <property name="icon-name">dialog-information-symbolic</property>
+                                            <child>
+                                              <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">4</property>
+
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Estado general</property>
+                                                    <property name="subtitle">Nivel de conciencia (alerta, Glasgow), orientación (tiempo, espacio, persona), facies (normocoloreada, ictérica, pálida, disneica), hidratación (mucosas secas, pliegue cutáneo), estado nutricional (obesidad, caquexia), posición en cama (decúbito forzado, sedestación),movilidad y marcha, lenguaje espontáneo.
+                                                    </property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Cabeza y cuello</property>
+                                                    <property name="subtitle">Pupilas (tamaño, simetría, reactividad a la luz y acomodación), conjuntivas (palidez), escleróticas (ictericia), fundoscopía</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Nariz y senos paranasales</property>
+                                                    <property name="subtitle">Mucosas (color, hidratación), lengua (saburra, úlceras), dientes, amígdalas (hipertrofia, exudado), úvula, reflejo nauseoso</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Oído</property>
+                                                    <property name="subtitle">Trago, mastoides (dolor a la palpación), otoscopía: membrana timpánica (color e integridad)</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Cuello</property>
+                                                    <property name="subtitle">Inspección: masas, ingugirtación yugular; palpación: tiroides, adenopatías, pulsos carotídeos; maniobras: signo de Brudzinski, Kernig (si meníngeo)</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Tórax</property>
+                                                    <property name="subtitle">Inspección: simetría, tirajes, uso de músculos accesorios, latido de punta; palpación: expansibilidad, frémito vocal táctil, choque de punta; percusión: resonancia, matidez; auscultación: murmullo vesicular, ruidos agregados (rales, sibilancias, roncos, frote), soplos, ruídos cardíacos; pulsos periféricos</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Abdomen</property>
+                                                    <property name="subtitle">Inspección: forma, cicatrices, peristalsis visible; auscultación: ruidos hidroaéreos, soplos vasculares; percusión: timpanismo, matidez, límites hepáticos; palpación: superficial (dolor, resistencia), profunda (visceromegalias, masas) y signos especiales (Murphy (colecistitis), McBurney, Blumberg, Rovsing (apendicitis), Giordano (pielonefritis), Ascitis (onda líquida, matidez cambiante))</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Extremidades</property>
+                                                    <property name="subtitle">Inspección: edemas, lesiones, deformidades; palpación: temperatura, dolor; signos de trombosis venosa profunda (Homans); arco de movilidad activa y pasiva; fuerza muscular (escala de Daniels); reflejos osteotendinosos (rotuliano, aquíleo, bicipital, tricipital)</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="AdwActionRow">
+                                                    <property name="title">Neurológico</property>
+                                                    <property name="subtitle">Pares cranealas, marcha, Romberg, fuerza, tono muscular, reflejos, sensibilidad (táctil, dolorosa, térmica, vibratoria)</property>
+                                                    <property name="activatable">False</property>
+                                                  </object>
+                                                </child>
+
+
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+
+
+                            <!-- Columna derecha: exploración física -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Exploración física</property>
+
+                                    <!-- Campo: insertar datos -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">4</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="label"></property>
+                                                <property name="halign">start</property>
+                                                <property name="margin-start">5</property>
+                                                <style>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkTextView" id="text_exploracion_fisica">
+                                                <property name="height-request">305</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="monospace">True</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Botón siguiente -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_to_page7">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="margin-end">5</property>
+                                <property name="tooltip-text">Ir a página 7</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- pagina 7  -->
+                <child>
+                  <object class="AdwNavigationPage" id="page7">
+                    <property name="tag">page7</property>
+                    <property name="title">Plan diagnóstico y terapéutico</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+
+                        <!-- Botón volver -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="valign">center</property>
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="GtkButton" id="btn_back_to_page6">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="margin-start">5</property>
+                                <property name="tooltip-text">Volver a página 6</property>
+                                <style>
+                                  <class name="flat"/>
+                                  <class name="pill"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <!-- Contenido principal en tres columnas -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">horizontal</property>
+                            <property name="spacing">20</property>
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="vexpand">True</property>
+
+                            <!-- Columna 1: Analisis -->
+
+
+                            <!-- Columna 2: Estudios y manejo -->
+                            <child>
+                              <object class="AdwPreferencesPage">
+                                <child>
+                                  <object class="AdwPreferencesGroup">
+                                    <property name="title">Manejo médico</property>
+
+
+                                    <!-- Solucion -->
+                                    <child>
+                                      <object class="AdwPreferencesRow">
+                                        <child>
+                                          <object class="GtkBox">
+                                            <property name="orientation">vertical</property>
+                                            <property name="spacing">20</property>
+                                            <child>
+                                              <object class="GtkLabel">
+                                                <property name="label">Diagnóstico presuntivo, diferencial y estudios complementarios</property>
+                                                <property name="halign">start</property>
+                                                <property name="margin-start">5</property>
+                                                <style>
+                                                  <class name="dim-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkTextView" id="text_solucion">
+                                                <property name="height-request">300</property>
+                                                <property name="width-request">800</property>
+                                                <property name="wrap-mode">word-char</property>
+                                                <property name="monospace">True</property>
+                                                <property name="margin-start">5</property>
+                                                <property name="margin-end">5</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <!-- Columna 3: Botones de acción -->
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">20</property>
+                                <property name="margin-end">30</property>
+                                <property name="valign">center</property>
+                                <property name="vexpand">True</property>
+
+                                <!-- Botón generar contenido -->
+                                <child>
+                                  <object class="GtkButton" id="btn_generar_resumen">
+                                    <property name="label">Consultar IA</property>
+                                    <property name="tooltip-text">Consultar Ollama sobre la situación clínica y obtener orientaciones sobre diagnóstico, estudios y manejo.</property>
+                                    <style>
+                                      <class name="suggested-action"/>
+                                      <class name="pill"/>
+                                    </style>
+                                  </object>
+                                </child>
+
+                                <!-- Caja de carga (spinner + mensaje) -->
+                                <child>
+                                  <object class="GtkBox" id="loading_box">
+                                    <property name="orientation">horizontal</property>
+                                    <property name="spacing">6</property>
+                                    <property name="visible">false</property>
+                                    <child>
+                                      <object class="GtkSpinner" id="spinner_resumen">
+                                        <property name="visible">true</property>
+                                        <property name="halign">center</property>
+                                        <property name="valign">center</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="label_loading">
+                                        <property name="label">Generando respuesta</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+
+                                <!-- Botón generar PDF -->
+                                <child>
+                                  <object class="GtkButton" id="btn_guardar_pdf">
+                                    <property name="label">Guardar</property>
+                                    <property name="tooltip-text">Exportar y guardar en PDF</property>
+                                    <style>
+                                      <class name="destructive-action"/>
+                                      <class name="pill"/>
+                                    </style>
+                                  </object>
+                                </child>
+
+                                <!-- Botón limpiar contenido -->
+                                <child>
+                                  <object class="GtkButton" id="btn_limpiar">
+                                    <property name="label">Limpiar HC</property>
+                                    <property name="tooltip-text">Limpiar historia clínica</property>
+                                    <style>
+                                      <class name="pill"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+
+
+                <!-- fin de paginas -->
+              </object>
+
+
+              <!-- fin de toastOverlay -->
+            </property>
+            <child type="top">
+              <object class="AdwHeaderBar">
+                <child type="end">
+                  <object class="GtkMenuButton">
+                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="menu-model">primary_menu</property>
+                    <property name="primary">True</property>
+                    <property name="tooltip-text" translatable="yes">Main Menu</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+
+    </property>
+  </template>
+  <!-- Ajustes numéricos para GtkSpinButton -->
+  <object class="GtkAdjustment" id="adjust_fc">
+    <property name="lower">0</property>
+    <property name="upper">300</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+
+  <object class="GtkAdjustment" id="adjust_fr">
+    <property name="lower">0</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+
+  <object class="GtkAdjustment" id="adjust_temp">
+    <property name="lower">25</property>
+    <property name="upper">45</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">1</property>
+  </object>
+
+  <object class="GtkAdjustment" id="adjust_sat">
+    <property name="lower">0</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+
+  <!-- Menú superior -->
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="action">app.preferences</attribute>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+      </item>
+      <item>
+        <attribute name="action">win.show-help-overlay</attribute>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.about</attribute>
+        <attribute name="label" translatable="yes">_About Olladoc</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

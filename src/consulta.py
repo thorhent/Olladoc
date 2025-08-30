@@ -1,0 +1,118 @@
+import requests
+from requests.exceptions import RequestException
+
+
+
+def listar_modelos_instalados():
+    url = "http://localhost:11434/api/tags"
+    response = requests.get(url)
+    if response.status_code == 200:
+        datos = response.json()
+        # Extraer solo los nombres
+        modelos = [m["name"] for m in datos["models"]]
+        return modelos
+    else:
+        raise Exception("Error consultando API de Ollama:", response.text)
+
+
+def generar_historia_clinica_ollama(modelo, texto_transcrito):
+    prompt = f"""Eres un médico clínico experto en historia clínica. Recibirás a continuación la transcripción de una entrevista entre un médico y un paciente, incluyendo tanto las preguntas del médico como las respuestas del paciente.
+
+Tu tarea es redactar de forma completa y profesional la enfermedad actual, los antecedentes personales y los antecedentes familiares en un JSON válido solo con estas claves exactas:
+
+{{
+  "enfermedad_actual": "...",
+  "antecedentes_personales": "...",
+  "antecedentes_familiares": "..."
+}}
+
+No incluyas explicaciones ni texto fuera del JSON. Respetar "clave": "string".
+
+Transcripción de la entrevista:
+
+{texto_transcrito}
+"""
+
+
+    response = llamar_ollama(modelo, prompt)
+    return response
+
+def generar_diagnostico_parcial_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes):
+    prompt = f"""Como médico clínico, realizar diagnóstico inicial fundamentado e sugerir recomendaciones basado en los datos siguientes de la anamnesis.
+
+Datos de anamnesis:
+
+- Datos personales:
+{datos_personales}
+
+- Motivo de consulta:
+{motivo_consulta}
+
+- Enfermedad actual:
+{enfermedad_actual}
+
+- Antecedentes:
+{antecedentes}
+"""
+
+    respuesta = llamar_ollama(modelo, prompt)
+    return respuesta
+
+def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, revision_sistemas, exploracion):
+    # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo
+    prompt = f"""Eres un médico clínico meticuloso. Debes generar de modo conciso un diagnóstico más probable, diagnóstico diferencial y estudios complementarios para confirmar diagnóstico basado en los posteriores datos clínicos que te doy.
+
+Respetar la forma:
+
+1. Diagnóstico presuntivo:
+
+2. Diagnóstico diferencial:
+
+3. Estudios complementarios:
+
+Datos clínicos:
+
+- Datos personales:
+{datos_personales}
+
+- Motivo de consulta:
+{motivo_consulta}
+
+- Enfermedad actual:
+{enfermedad_actual}
+
+- Antecedentes:
+{antecedentes}
+
+- Revisión por sistemas:
+{revision_sistemas}
+
+- Exploración física:
+{exploracion}
+"""
+
+    respuesta = llamar_ollama(modelo, prompt)
+    return respuesta
+
+def llamar_ollama(modelo, prompt):
+    # Llamada HTTP POST al servidor local de Ollama
+
+    try:
+        with requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": modelo,
+                "prompt": prompt,
+                "stream": False
+            },
+            stream=False,
+            timeout=480  # tiempo de espera 8 minutos
+
+        ) as response:
+            if response.ok:
+                return response.json().get("response", "").strip()
+            else:
+                raise RuntimeError(f"Error en la respuesta de Ollama: {response.status_code} - {response.text}")
+
+    except RequestException as e:
+        raise RuntimeError(f"Error de conexión con Ollama: {str(e)}")

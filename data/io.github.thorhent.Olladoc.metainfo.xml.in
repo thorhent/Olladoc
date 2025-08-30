@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.thorhent.Olladoc</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+
+  <name>Olladoc</name>
+  <summary>Historia clínica médica con apoyo de IA</summary>
+  <description>
+    <p>Olladoc es una aplicación médica moderna desarrollada con Python, GTK 4 y libadwaita. Permite generar historias clínicas estructuradas mediante entrada por voz o teclado, donde se puede tomar decisiones con apoyo de inteligencia artificial.</p>
+    <p>Diseñada para estimular y facilitar la continua producción de una historia clínica completa y adecuada según los criterios más rigurosos de investigación médica. La herramienta tiene el potencial para aumentar la eficiencia médica, reducir los errores y con eso beneficiar a los pacientes.</p>
+  </description>
+
+  <developer id="io.github.thorhent">
+    <name>Taylan Branco Meurer</name>
+  </developer>
+
+  
+  <url type="homepage">https://github.com/thorhent/Olladoc</url>
+  <url type="vcs-browser">https://github.com/thorhent/Olladoc</url>
+  <url type="bugtracker">https://github.com/thorhent/Olladoc/issues</url>
+  <url type="help">https://github.com/thorhent/Olladoc/wiki</url>
+  <url type="contact">https://github.com/thorhent/Olladoc/issues</url>
+  
+  
+  <translation type="gettext">olladoc</translation>
+
+  <launchable type="desktop-id">io.github.thorhent.Olladoc.desktop</launchable>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+
+  <!-- Applications should set a brand color in both light and dark variants like so -->
+  <branding>
+    <color type="primary" scheme_preference="light">#ff00ff</color>
+    <color type="primary" scheme_preference="dark">#993d3d</color>
+  </branding>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/thorhent/Olladoc/master/data/olladoc-img1.png</image>
+      <caption>Primera página (1 de 7)</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/thorhent/Olladoc/master/data/consulta.png</image>
+      <caption>Página 7 (Consultar IA, guardar historia clínica completa y limpiarla)</caption>
+    </screenshot>
+  </screenshots>
+
+
+  <releases>
+    <release version="1.9.25" date="2025-09-01">
+      <url type="details"></url>
+      <description>
+        <p>Primera versión pública estable. Incluye:</p>
+        <ul>
+          <li>Entrada por voz con transcripción automática</li>
+          <li>Generación de historia clínica estructurada y con guías textuales</li>
+          <li>Asistente con inteligencia artificial médica</li>
+          <li>Interfaz moderna con libadwaita</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+
+</component>
