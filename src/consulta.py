@@ -21,17 +21,6 @@ def listar_modelos_instalados():
         return []
 
 
-
-    response = requests.get(url)
-    if response.status_code == 200:
-        datos = response.json()
-        # Extraer solo los nombres
-        modelos = [m["name"] for m in datos["models"]]
-        return modelos
-    else:
-        raise Exception("Error consultando API de Ollama:", response.text)
-
-
 def generar_historia_clinica_ollama(modelo, texto_transcrito):
     prompt = f"""Eres un médico clínico experto en historia clínica. Recibirás a continuación la transcripción de una entrevista entre un médico y un paciente, incluyendo tanto las preguntas del médico como las respuestas del paciente.
 
