@@ -1,10 +1,27 @@
 import requests
-from requests.exceptions import RequestException
+from requests.exceptions import RequestException, ConnectionError
 
 
 
 def listar_modelos_instalados():
     url = "http://localhost:11434/api/tags"
+    try:
+        response = requests.get(url, timeout=5)  # Añade un tiempo de espera para evitar bloqueos
+        response.raise_for_status()  # Lanza un error para códigos de estado 4xx/5xx
+
+        datos = response.json()
+        modelos = [m["name"] for m in datos["models"]]
+        return modelos
+
+    except (ConnectionError, RequestException) as e:
+        print(f"Advertencia: No se pudo conectar con el servicio Ollama. {e}")
+        return []
+    except Exception as e:
+        print(f"Verificar instalación y configuración de ollama: {e}")
+        return []
+
+
+
     response = requests.get(url)
     if response.status_code == 200:
         datos = response.json()
