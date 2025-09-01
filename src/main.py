@@ -39,7 +39,7 @@ class OlladocApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
         modelos = consulta.listar_modelos_instalados()
-        self.modelo_IA = modelos[0]  # Valor inicial por defecto
+        self.modelo_IA = modelos[0] if modelos else ""
 
     def do_activate(self):
         """Called when the application is activated.
