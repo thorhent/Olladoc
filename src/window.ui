@@ -681,7 +681,7 @@
 
                                         <child>
                                           <object class="AdwActionRow" id="AdwPage4Evaluacion">
-                                            <property name="title">Consultar para diagnóstico inicial y recomendaciones</property>
+                                            <property name="title">Consultar para diagnóstico inicial</property>
                                             <property name="subtitle">El diagnóstico puede estar equivocado, por tanto siempre evaluar con atención las respuestas</property>
 
                                             <!-- Spinner -->
