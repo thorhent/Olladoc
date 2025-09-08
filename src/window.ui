@@ -653,7 +653,7 @@
                                   <object class="AdwPreferencesPage">
                                     <child>
                                       <object class="AdwPreferencesGroup">
-                                        <property name="title">Diagnóstico inicial y recomendaciones</property>
+                                        <property name="title">Diagnóstico inicial más probable</property>
 
                                         <child>
                                           <object class="AdwPreferencesRow">
