@@ -234,7 +234,7 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_evaluacion_IA.connect("clicked", self.on_generar_evaluacion_inicial)
         self.btn_evaluacion_IA.set_sensitive(False)  # Deshabilitado al inicio
         self.modelo_IA = self.get_application().modelo_IA
-        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial y recomendaciones [{self.modelo_IA}]")
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA}]")
 
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
