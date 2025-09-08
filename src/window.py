@@ -293,7 +293,7 @@ class OlladocWindow(Adw.ApplicationWindow):
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
         self.btn_generar_resumen.set_label(f"Consultar {nuevo_modelo}")
-        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial y recomendaciones [{nuevo_modelo}]")
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{nuevo_modelo}]")
 
     def validar_anamnesis(self, *args):
         """Habilita el botón solo si los datos básicos están completos (ocupación opcional)."""

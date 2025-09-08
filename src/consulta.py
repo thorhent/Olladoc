@@ -44,7 +44,7 @@ Transcripción de la entrevista:
     return response
 
 def generar_diagnostico_parcial_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes):
-    prompt = f"""Como médico clínico, realizar diagnóstico inicial más probable basado en los datos siguientes de la anamnesis.
+    prompt = f"""Como médico clínico, realizar solo diagnóstico inicial más probable basado en los datos siguientes de la anamnesis.
 
 Datos de anamnesis:
 
