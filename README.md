@@ -33,30 +33,42 @@
 
 ---
 
-## 🧪 Cómo ejecutar localmente (Flatpak)
+## Instalación desde Flatpak
 
-### 📦 1. Construcción, prueba e instalación
+### 1. Añadir el repositorio
 
-Para construir el proyecto Flatpak desde cero y limpiar cualquier compilación anterior, usa el siguiente comando:
-
-```bash
-flatpak-builder --force-clean build-dir com.github.thorhent.Olladoc
-```
-
-Una vez que el proyecto esté construido, puedes ejecutar la aplicación directamente desde el directorio de compilación:
+Para añadir el repositorio de la aplicación **Olladoc**, abre una terminal y ejecuta:
 
 ```bash
-flatpak-builder --run build-dir com.github.thorhent.Olladoc olladoc
-
+flatpak remote-add --user --if-not-exists no-gpg-verify thorhent-olladoc https://thorhent.github.io/Olladoc/Olladoc.flatpakrepo
 ```
 
-
-Para instalar el proyecto Flatpak en tu sistema (solo para el usuario actual) y limpiar cualquier compilación anterior antes de la instalación:
+### 2. Actualizar el repositorio (opcional)
 
 ```bash
-flatpak-builder --user --force-clean --install build-dir com.github.thorhent.Olladoc
-
+flatpak update --user thorhent-olladoc
 ```
+
+### 3. Instalar la aplicación
+
+```bash
+flatpak install thorhent-olladoc io.github.thorhent.Olladoc
+```
+
+### 4. Ejecutar la aplicación
+
+```bash
+flatpak run io.github.thorhent.Olladoc
+```
+
+### 5. Desinstalar la aplicación (opcional)
+
+```bash
+flatpak uninstall io.github.thorhent.Olladoc
+flatpak remote-delete thorhent-olladoc
+```
+
+> 💡 **Nota:** La instalación se realiza con la opción `--user`, lo que significa que queda disponible solo para el usuario actual. Si deseas instalarla a nivel del sistema, omite `--user`.
 
 ---
 
