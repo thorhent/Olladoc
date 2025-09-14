@@ -39,14 +39,14 @@ class OlladocWindow(Adw.ApplicationWindow):
     btn_to_page4 = Gtk.Template.Child("btn_to_page4")
     btn_to_page5 = Gtk.Template.Child("btn_to_page5")
     btn_to_page6 = Gtk.Template.Child("btn_to_page6")
-    btn_to_page7 = Gtk.Template.Child("btn_to_page7")
+
 
     btn_back_to_page1 = Gtk.Template.Child("btn_back_to_page1")
     btn_back_to_page2 = Gtk.Template.Child("btn_back_to_page2")
     btn_back_to_page3 = Gtk.Template.Child("btn_back_to_page3")
     btn_back_to_page4 = Gtk.Template.Child("btn_back_to_page4")
     btn_back_to_page5 = Gtk.Template.Child("btn_back_to_page5")
-    btn_back_to_page6 = Gtk.Template.Child("btn_back_to_page6")
+
 
     # Pagina 1 widgets
     entry_motivo = Gtk.Template.Child("entry_motivo")
@@ -80,86 +80,8 @@ class OlladocWindow(Adw.ApplicationWindow):
     AdwPage4Evaluacion = Gtk.Template.Child("AdwPage4Evaluacion")
     spinner_evaluacion_IA = Gtk.Template.Child("spinner_evaluacion_IA")
 
-    # Página 5 widgets switchs
-    switch_fiebre = Gtk.Template.Child("switch_fiebre")
-    switch_escalofrios = Gtk.Template.Child("switch_escalofrios")
-    switch_sudor_nocturno = Gtk.Template.Child("switch_sudor_nocturno")
-    switch_perdida_peso = Gtk.Template.Child("switch_perdida_peso")
-    switch_fatiga = Gtk.Template.Child("switch_fatiga")
-    switch_malestar_general = Gtk.Template.Child("switch_malestar_general")
-    switch_cambios_piel = Gtk.Template.Child("switch_cambios_piel")
-    switch_ulceras = Gtk.Template.Child("switch_ulceras")
-    switch_cambios_cabello_unhas = Gtk.Template.Child("switch_cambios_cabello_unhas")
-    switch_menor_agudeza_visual = Gtk.Template.Child("switch_menor_agudeza_visual")
-    switch_dolor_ocular = Gtk.Template.Child("switch_dolor_ocular")
-    switch_fotofobia = Gtk.Template.Child("switch_fotofobia")
-    switch_vision_doble = Gtk.Template.Child("switch_vision_doble")
-    switch_lagrimeo = Gtk.Template.Child("switch_lagrimeo")
-    switch_hipoacusia = Gtk.Template.Child("switch_hipoacusia")
-    switch_tinnitus = Gtk.Template.Child("switch_tinnitus")
-    switch_otalgia = Gtk.Template.Child("switch_otalgia")
-    switch_secrecion = Gtk.Template.Child("switch_secrecion")
-    switch_congestión_nasal = Gtk.Template.Child("switch_congestion_nasal")
-    switch_rinorrea = Gtk.Template.Child("switch_rinorrea")
-    switch_epistaxis = Gtk.Template.Child("switch_epistaxis")
-    switch_estornudos = Gtk.Template.Child("switch_estornudos")
-    switch_dolor_facial = Gtk.Template.Child("switch_dolor_facial")
-    switch_dolor_garganta = Gtk.Template.Child("switch_dolor_garganta")
-    switch_aftas = Gtk.Template.Child("switch_aftas")
-    switch_sangrado_encias = Gtk.Template.Child("switch_sangrado_encias")
-    switch_disfonia = Gtk.Template.Child("switch_disfonia")
-    switch_mal_aliento = Gtk.Template.Child("switch_mal_aliento")
-    switch_dolor_rigidez_cuello = Gtk.Template.Child("switch_dolor_rigidez_cuello")
-    switch_masas_cuello = Gtk.Template.Child("switch_masas_cuello")
-    switch_ganglios_palpables_cuello = Gtk.Template.Child("switch_ganglios_palpables_cuello")
-    switch_tos = Gtk.Template.Child("switch_tos")
-    switch_disnea = Gtk.Template.Child("switch_disnea")
-    switch_sibilancias = Gtk.Template.Child("switch_sibilancias")
-    switch_hemoptisis = Gtk.Template.Child("switch_hemoptisis")
-    switch_dolor_toracico = Gtk.Template.Child("switch_dolor_toracico")
-    switch_dolor_precordial = Gtk.Template.Child("switch_dolor_precordial")
-    switch_palpitaciones = Gtk.Template.Child("switch_palpitaciones")
-    switch_disnea_paroxistica_nocturna = Gtk.Template.Child("switch_disnea_paroxistica_nocturna")
-    switch_ortopnea = Gtk.Template.Child("switch_ortopnea")
-    switch_edemas_perifericos = Gtk.Template.Child("switch_edemas_perifericos")
-    switch_claudicacion_intermitente = Gtk.Template.Child("switch_claudicacion_intermitente")
-    switch_vomitos = Gtk.Template.Child("switch_vomitos")
-    switch_dolor_abdominal = Gtk.Template.Child("switch_dolor_abdominal")
-    switch_cambios_apetito = Gtk.Template.Child("switch_cambios_apetito")
-    switch_pirosis = Gtk.Template.Child("switch_pirosis")
-    switch_diarrea_constipacion = Gtk.Template.Child("switch_diarrea_constipacion")
-    switch_hematoquecia_melenas = Gtk.Template.Child("switch_hematoquecia_melenas")
-    switch_distension_abdominal = Gtk.Template.Child("switch_distension_abdominal")
-    switch_ictericia = Gtk.Template.Child("switch_ictericia")
-    switch_disuria = Gtk.Template.Child("switch_disuria")
-    switch_polaquiuria = Gtk.Template.Child("switch_polaquiuria")
-    switch_hematuria = Gtk.Template.Child("switch_hematuria")
-    switch_incontinencia_urinaria = Gtk.Template.Child("switch_incontinencia_urinaria")
-    switch_flujo_vaginal = Gtk.Template.Child("switch_flujo_vaginal")
-    switch_dolor_pelvico = Gtk.Template.Child("switch_dolor_pelvico")
-    switch_dificultad_iniciar_miccion = Gtk.Template.Child("switch_dificultad_iniciar_miccion")
-    switch_artralgia = Gtk.Template.Child("switch_artralgia")
-    switch_mialgia = Gtk.Template.Child("switch_mialgia")
-    switch_inflamacion_articular = Gtk.Template.Child("switch_inflamacion_articular")
-    switch_rigidez_matutina = Gtk.Template.Child("switch_rigidez_matutina")
-    switch_menor_movimientos_articulares = Gtk.Template.Child("switch_menor_movimientos_articulares")
-    switch_mareos = Gtk.Template.Child("switch_mareos")
-    switch_parestesias = Gtk.Template.Child("switch_parestesias")
-    switch_convulsiones = Gtk.Template.Child("switch_convulsiones")
-    switch_debilidad_muscular = Gtk.Template.Child("switch_debilidad_muscular")
-    switch_alteracion_marcha = Gtk.Template.Child("switch_alteracion_marcha")
-    switch_cambios_memoria_concentracion = Gtk.Template.Child("switch_cambios_memoria_concentracion")
-    switch_estado_animo = Gtk.Template.Child("switch_estado_animo")
-    switch_insomnio = Gtk.Template.Child("switch_insomnio")
-    switch_alucinaciones = Gtk.Template.Child("switch_alucinaciones")
-    switch_ideacion_suicida = Gtk.Template.Child("switch_ideacion_suicida")
-    switch_intolerancia_frio = Gtk.Template.Child("switch_intolerancia_frio")
-    switch_intolerancia_calor = Gtk.Template.Child("switch_intolerancia_calor")
-    switch_cambios_peso = Gtk.Template.Child("switch_cambios_peso")
-    switch_poliuria_polidipsia = Gtk.Template.Child("switch_poliuria_polidipsia")
-    switch_cambios_vello_corporal = Gtk.Template.Child("switch_cambios_vello_corporal")
 
-    # Pagina 6 widgets
+    # Pagina 5 widgets
     spin_fc = Gtk.Template.Child("spin_fc")
     spin_fr = Gtk.Template.Child("spin_fr")
     spin_temp = Gtk.Template.Child("spin_temp")
@@ -170,7 +92,7 @@ class OlladocWindow(Adw.ApplicationWindow):
     text_exploracion_fisica = Gtk.Template.Child("text_exploracion_fisica")
 
 
-    # Pagina 7 widgets
+    # Pagina 6 widgets
     text_solucion = Gtk.Template.Child("text_solucion")
 
     btn_generar_resumen = Gtk.Template.Child("btn_generar_resumen")
@@ -196,14 +118,14 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_to_page4.connect("clicked", self.on_to_page4)
         self.btn_to_page5.connect("clicked", self.on_to_page5)
         self.btn_to_page6.connect("clicked", self.on_to_page6)
-        self.btn_to_page7.connect("clicked", self.on_to_page7)
+
 
         self.btn_back_to_page1.connect("clicked", self.on_back_to_page1)
         self.btn_back_to_page2.connect("clicked", self.on_back_to_page2)
         self.btn_back_to_page3.connect("clicked", self.on_back_to_page3)
         self.btn_back_to_page4.connect("clicked", self.on_back_to_page4)
         self.btn_back_to_page5.connect("clicked", self.on_back_to_page5)
-        self.btn_back_to_page6.connect("clicked", self.on_back_to_page6)
+
 
         # Conectar eventos de cambio de texto o selección
         self.entry_nombre.connect("changed", self.validar_anamnesis)
@@ -262,9 +184,6 @@ class OlladocWindow(Adw.ApplicationWindow):
     def on_to_page6(self, button):
         self.navigation_view.push_by_tag("page6")
 
-    def on_to_page7(self, button):
-        self.navigation_view.push_by_tag("page7")
-
 
     def on_back_to_page1(self, button):
         page1 = self.navigation_view.find_page("page1")
@@ -285,10 +204,6 @@ class OlladocWindow(Adw.ApplicationWindow):
     def on_back_to_page5(self, button):
         page5 = self.navigation_view.find_page("page5")
         self.navigation_view.pop_to_page(page5)
-
-    def on_back_to_page6(self, button):
-        page6 = self.navigation_view.find_page("page6")
-        self.navigation_view.pop_to_page(page6)
 
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
@@ -568,10 +483,6 @@ class OlladocWindow(Adw.ApplicationWindow):
         # Pagina 4
         limpiar_textview(self.text_evaluacion_IA)
 
-        # Página 5
-        for attr in dir(self):
-            if attr.startswith("switch_"):
-                getattr(self, attr).set_active(False)
 
         # Página 5
         limpiar_spin(self.spin_fc)
@@ -650,26 +561,13 @@ class OlladocWindow(Adw.ApplicationWindow):
         antecedentes = self.get_text_from_view(self.text_antecedentes_personales) + "\n" + self.get_text_from_view(self.text_antecedentes_familiares)
 
 
-        sintomas_activados = []
-
-        # Itera sobre todos los atributos de la clase que son Gtk.Switch
-        # y que tienen un nombre que empieza con 'switch_'
-        for var_name, switch in self.__dict__.items():
-            if isinstance(switch, Gtk.Switch) and var_name.startswith("switch_"):
-                # Si el switch está activo
-                if switch.get_active():
-                    # Obtiene el nombre del síntoma limpiando el prefijo
-                    # Por ejemplo: 'switch_fiebre' -> 'fiebre' -> 'Fiebre'
-                    sintoma_nombre = var_name.replace("switch_", "").replace("_", " ").title()
-                    sintomas_activados.append(sintoma_nombre)
-
         #recoger signos vitales
         fc = self.spin_fc.get_value_as_int()
         fr = self.spin_fr.get_value_as_int()
         temp = self.spin_temp.get_value()
         sat = self.spin_sat.get_value_as_int()
-        pa = self.entry_pa.get_text()
-        signos_vitales = f"FC: {fc}, FR: {fr}, Temp: {temp}°C, Sat: {sat}%, PA: {pa}"
+        ta = self.entry_pa.get_text()
+        signos_vitales = f"FC: {fc}, FR: {fr}, Temp: {temp}°C, Sat: {sat}%, PA: {ta}"
         exploracion = f"{signos_vitales} \n "+ self.get_text_from_view(self.text_exploracion_fisica)
 
         modelo_IA = getattr(self.get_application(), "modelo_IA", None)
@@ -687,7 +585,6 @@ class OlladocWindow(Adw.ApplicationWindow):
             "Motivo consulta": motivo_consulta,
             "Enfermedad actual": enfermedad_actual,
             "Antecedentes": antecedentes,
-            "Revisión por sistemas": ", ".join(sintomas_activados),
             "Exploración": exploracion,
             "Solución": "",
         }
@@ -700,7 +597,6 @@ class OlladocWindow(Adw.ApplicationWindow):
                     motivo_consulta,
                     enfermedad_actual,
                     antecedentes,
-                    ", ".join(sintomas_activados),
                     exploracion
                 )
 
