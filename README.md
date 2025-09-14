@@ -40,7 +40,7 @@
 Para añadir el repositorio de la aplicación **Olladoc**, abre una terminal y ejecuta:
 
 ```bash
-flatpak remote-add --user --if-not-exists no-gpg-verify thorhent-olladoc https://thorhent.github.io/Olladoc/Olladoc.flatpakrepo
+flatpak remote-add --user --if-not-exists --no-gpg-verify thorhent-olladoc https://thorhent.github.io/Olladoc/Olladoc.flatpakrepo
 ```
 
 ### 2. Actualizar el repositorio (opcional)
