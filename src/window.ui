@@ -653,7 +653,7 @@
                                   <object class="AdwPreferencesPage">
                                     <child>
                                       <object class="AdwPreferencesGroup">
-                                        <property name="title">Diagnóstico inicial más probable</property>
+                                        <property name="title">Diagnóstico preliminar y diferencial</property>
 
                                         <child>
                                           <object class="AdwPreferencesRow">
@@ -1073,7 +1073,7 @@
                                             <property name="spacing">20</property>
                                             <child>
                                               <object class="GtkLabel">
-                                                <property name="label">Diagnóstico presuntivo, diferencial y estudios complementarios</property>
+                                                <property name="label">Diagnóstico presuntivo, estudios complementarios y acción inicial</property>
                                                 <property name="halign">start</property>
                                                 <property name="margin-start">5</property>
                                                 <style>

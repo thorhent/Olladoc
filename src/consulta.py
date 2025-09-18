@@ -44,7 +44,7 @@ Transcripción de la entrevista:
     return response
 
 def generar_diagnostico_parcial_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes):
-    prompt = f"""Como médico clínico, realizar respuesta corta solo con diagnóstico inicial más probable basado en los datos siguientes de la anamnesis.
+    prompt = f"""Como médico clínico, realizar respuesta corta solo con diagnóstico inicial más probable y diferencial basado en los datos siguientes de la anamnesis.
 
 Datos de anamnesis:
 
@@ -66,15 +66,7 @@ Datos de anamnesis:
 
 def generar_diagnostico_completo_ollama(modelo, datos_personales, motivo_consulta, enfermedad_actual, antecedentes, exploracion):
     # Preparar mensaje como si fuera un prompt para los modelos mistral, llama3 y Elixpo
-    prompt = f"""Eres un médico clínico meticuloso. Debes generar de modo conciso un diagnóstico más probable, diagnóstico diferencial y estudios complementarios para confirmar diagnóstico basado en los posteriores datos clínicos que te doy.
-
-Respetar la forma:
-
-1. Diagnóstico presuntivo:
-
-2. Diagnóstico diferencial:
-
-3. Estudios complementarios:
+    prompt = f"""Eres un médico clínico meticuloso. Debes generar respuesta estrictamente concisa y solo sobre diagnóstico más probable, estudios complementarios esenciales para confirmar diagnóstico y acción inicial, todo basado en los posteriores datos clínicos que te doy.
 
 Datos clínicos:
 
