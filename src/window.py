@@ -560,6 +560,8 @@ class OlladocWindow(Adw.ApplicationWindow):
         enfermedad_actual = self.get_text_from_view(self.text_enfermedad_actual)
         antecedentes = self.get_text_from_view(self.text_antecedentes_personales) + "\n" + self.get_text_from_view(self.text_antecedentes_familiares)
 
+        # diagnostico preliminar y diferencial de page4
+        diagnostico_page4 = self.get_text_from_view(self.text_evaluacion_IA) or None
 
         #recoger signos vitales
         fc = self.spin_fc.get_value_as_int()
@@ -580,14 +582,19 @@ class OlladocWindow(Adw.ApplicationWindow):
         buffer = self.text_solucion.get_buffer()
         buffer.set_text("")
 
+
         self.historia_clinica = {
             "Datos personales": datos_personales_completo,
             "Motivo consulta": motivo_consulta,
             "Enfermedad actual": enfermedad_actual,
             "Antecedentes": antecedentes,
-            "Exploración": exploracion,
-            "Solución": "",
         }
+
+        if diagnostico_page4 is not None:
+            self.historia_clinica["Diagnóstico preliminar y diferencial"] = diagnostico_page4
+
+        self.historia_clinica["Exploración"] = exploracion
+        self.historia_clinica["Diagnóstico, estudios y acciones"] = ""
 
 
         def worker():
@@ -602,7 +609,7 @@ class OlladocWindow(Adw.ApplicationWindow):
 
                 GLib.idle_add(buffer.set_text, respuesta)
                 #GLib.idle_add(self.mostrar_respuesta, respuesta)
-                self.historia_clinica["Solución"] = respuesta
+                self.historia_clinica["Diagnóstico, estudios y acciones"] = respuesta
 
             except Exception as e:
                 GLib.idle_add(self.mostrar_error, str(e))
