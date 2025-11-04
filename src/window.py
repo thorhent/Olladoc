@@ -156,14 +156,17 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_evaluacion_IA.connect("clicked", self.on_generar_evaluacion_inicial)
         self.btn_evaluacion_IA.set_sensitive(False)  # Deshabilitado al inicio
         self.modelo_IA = self.get_application().modelo_IA
-        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA}]")
+
+        self.modelo_IA_print = self.modelo_IA.split(':')[0]
+
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
         self.btn_limpiar.set_sensitive(False)
 
         self.btn_generar_resumen.connect("clicked", self.on_generar_resumen)
-        self.btn_generar_resumen.set_label(f"Consultar {self.modelo_IA}")
+        self.btn_generar_resumen.set_label(f"Consultar {self.modelo_IA_print}")
 
 
         self.btn_guardar_pdf.connect("clicked", self.on_generar_pdf_historia_clinica)
@@ -207,8 +210,9 @@ class OlladocWindow(Adw.ApplicationWindow):
 
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
-        self.btn_generar_resumen.set_label(f"Consultar {nuevo_modelo}")
-        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{nuevo_modelo}]")
+        self.modelo_IA_print = nuevo_modelo.split(':')[0]
+        self.btn_generar_resumen.set_label(f"Consultar {self.modelo_IA_print}")
+        self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
     def validar_anamnesis(self, *args):
         """Habilita el botón solo si los datos básicos están completos (ocupación opcional)."""
