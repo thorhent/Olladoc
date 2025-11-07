@@ -61,10 +61,10 @@
 
 
   <releases>
-    <release version="1.10.25" date="2025-09-11">
+    <release version="1.11.25" date="2025-09-11">
       <url type="details"></url>
       <description>
-        <p>Segunda versión pública estable. Incluye:</p>
+        <p>Versión pública estable. Incluye:</p>
         <ul>
           <li>Entrada por voz con transcripción automática</li>
           <li>Generación de historia clínica estructurada y con guías textuales</li>

@@ -95,15 +95,15 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 ### 📥 Instalar modelos Ollama
 
-Recomendados y probados en computadora sin GPU con **8 GB de RAM**:  
-- `phi3.5:3.8b`  
-- `gemma3:4b`  
-- `llama3.2:3b`
+Recomendados:  
+- `qwen3-vl:235b-cloud`  
+- `gpt-oss:120b-cloud`  
+- `gpt-oss:20b-cloud`
 
 ```bash
-ollama pull phi3.5:3.8b
-ollama pull gemma3:4b
-ollama pull llama3.2:3b
+ollama pull qwen3-vl:235b-cloud
+ollama pull gpt-oss:120b-cloud
+ollama pull gpt-oss:20b-cloud
 ```
 
 
