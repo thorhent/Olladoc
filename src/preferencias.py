@@ -53,9 +53,9 @@ class PreferenciasWindow(Adw.PreferencesWindow):
 
         # Lista de ActionRows informativas
         rows = [
-            ("gemma3:4b", """Modelo de Google, 4 B parámetros, rápido y eficiente, con capacidad multimodal (texto e imágenes) y buena comprensión de instrucciones."""),
-            ("llama3.2:3b", """Modelo de Meta, 3 B parámetros, multilingüe, optimizado para diálogo y tareas generales con bajo consumo."""),
-            ("phi3.5:3.8b", """Modelo de lenguaje desarrollado por Microsoft, perteneciente a la familia Phi. Consta de aproximadamente 3.8 mil millones de parámetros, lo que lo sitúa en la categoría de modelos ligeros, optimizados para eficiencia y despliegue en hardware con recursos limitados.""")
+            ("qwen3-vl:235b-cloud", """Modelo multimodal de gran escala desarrollado por Alibaba Cloud, perteneciente a la tercera generación de la familia Qwen, diseñado para procesar de forma integrada texto, imágenes y video mediante 235 mil millones de parámetros."""),
+            ("gpt-oss:120b-cloud", """Modelo de lenguaje de código abierto desarrollado por OpenAI que cuenta con aproximadamente 120 mil millones de parámetros (117B según fuentes) y emplea una arquitectura mixture-of-experts (MoE) con cerca de 5.1 mil millones de parámetros activos."""),
+            ("gpt-oss:20b-cloud", """Modelo de lenguaje abierto con 20 mil millones de parámetros, optimizado para ejecución en la nube y entornos de baja latencia. Emplea arquitectura densa eficiente, con razonamiento contextual sólido, comprensión multilingüe y generación estructurada, adecuado para aplicaciones técnicas, médicas y científicas que requieren análisis de texto clínico, resumen de información y soporte inteligente a la decisión.""")
         ]
 
         for nombre, descripcion in rows:
