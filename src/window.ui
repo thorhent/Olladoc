@@ -24,6 +24,7 @@
                       <object class="GtkBox">
                         <property name="orientation">horizontal</property>
                         <property name="spacing">10</property>
+
                         <child>
                           <object class="GtkScrolledWindow">
                             <property name="hscrollbar-policy">never</property>
@@ -36,6 +37,8 @@
                                     <child>
                                       <object class="AdwEntryRow" id="entry_motivo">
                                         <property name="title">Motivo</property>
+                                        <property name="width-request">750</property>
+                                        <property name="hexpand">true</property>
                                       </object>
                                     </child>
                                   </object>
