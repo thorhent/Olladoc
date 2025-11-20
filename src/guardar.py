@@ -4,6 +4,14 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from gi.repository import Gtk, Gio, GLib
 
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+BASE_DIR = "/app/share/olladoc/fonts/"
+
+pdfmetrics.registerFont(TTFont("DejaVuSans", os.path.join(BASE_DIR, "DejaVuSans.ttf")))
+pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", os.path.join(BASE_DIR, "DejaVuSans-Bold.ttf")))
+
 def guardar_historia_clinica_pdf(widget, datos_historia_clinica, modelo, idHC):
     # Paso 1: Diálogo para elegir carpeta
     file_dialog = Gtk.FileDialog()
@@ -49,11 +57,11 @@ def generar_pdf_historia_clinica(ruta, datos):
     ancho, alto = A4
     y = alto - 50  # Margen superior
 
-    c.setFont("Helvetica-Bold", 16)
+    c.setFont("DejaVuSans-Bold", 16)
     c.drawString(50, y, "Historia Clínica")
     y -= 30
 
-    c.setFont("Helvetica", 11)
+    c.setFont("DejaVuSans", 11)
     fecha_actual = datetime.date.today().strftime("%d/%m/%Y")
     c.drawString(50, y, f"Fecha: {fecha_actual}")
     y -= 30
@@ -61,12 +69,16 @@ def generar_pdf_historia_clinica(ruta, datos):
     for seccion, contenido in datos.items():
         if not contenido:
             continue
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont("DejaVuSans-Bold", 12)
         c.drawString(50, y, f"{seccion}:")
         y -= 20
-        c.setFont("Helvetica", 11)
+        c.setFont("DejaVuSans", 11)
         
         for linea in contenido.split("\n"):
+            # Preservar líneas en blanco
+            if linea.strip() == "":
+                y -= 15
+                continue
             for sublinea in dividir_linea(linea, max_chars=95):
                 if y < 80:
                     c.showPage()
