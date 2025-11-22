@@ -9,6 +9,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_JUSTIFY
 
 # Obtener estilos predefinidos y personalizarlos
 estilos = getSampleStyleSheet()
@@ -18,7 +19,8 @@ estilo_normal = estilos['Normal']
 estilo_normal.fontName = 'NotoSans-Regular'
 estilo_normal.fontSize = 11
 estilo_normal.leading = 15
-estilo_normal.spaceAfter = 10
+estilo_normal.spaceAfter = 15
+estilo_normal.alignment = TA_JUSTIFY
 
 # Estilo para el título del documento
 estilo_titulo = estilos['Title']
