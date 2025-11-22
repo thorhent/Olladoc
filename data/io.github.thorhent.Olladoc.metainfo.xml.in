@@ -61,7 +61,7 @@
 
 
   <releases>
-    <release version="1.11.25" date="2025-09-11">
+    <release version="1.11.25" date="2025-11-21">
       <url type="details"></url>
       <description>
         <p>Versión pública estable. Incluye:</p>
@@ -70,6 +70,7 @@
           <li>Generación de historia clínica estructurada y con guías textuales</li>
           <li>Asistente con inteligencia artificial médica</li>
           <li>Interfaz moderna con libadwaita</li>
+          <li>Guardar historia clínica en PDF</li>
         </ul>
       </description>
     </release>

@@ -38,11 +38,9 @@ BASE_DIR = "/app/share/olladoc/fonts/"
 
 pdfmetrics.registerFont(TTFont("DejaVuSans", os.path.join(BASE_DIR, "DejaVuSans.ttf")))
 pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", os.path.join(BASE_DIR, "DejaVuSans-Bold.ttf")))
+
 pdfmetrics.registerFont(TTFont("NotoSans-Regular", os.path.join(BASE_DIR, "NotoSans-Regular.ttf")))
 pdfmetrics.registerFont(TTFont("NotoSans-Bold", os.path.join(BASE_DIR, "NotoSans-Bold.ttf")))
-
-pdfmetrics.registerFont(TTFont("LiberationSans-Regular", os.path.join(BASE_DIR, "LiberationSans-Regular.ttf")))
-pdfmetrics.registerFont(TTFont("LiberationSans-Bold", os.path.join(BASE_DIR, "LiberationSans-Bold.ttf")))
 
 
 def guardar_historia_clinica_pdf(widget, datos_historia_clinica, modelo, idHC):
