@@ -7,10 +7,43 @@ from gi.repository import Gtk, Gio, GLib
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+
+# Obtener estilos predefinidos y personalizarlos
+estilos = getSampleStyleSheet()
+
+# Estilo para el cuerpo del texto
+estilo_normal = estilos['Normal']
+estilo_normal.fontName = 'NotoSans-Regular'
+estilo_normal.fontSize = 11
+estilo_normal.leading = 15
+estilo_normal.spaceAfter = 10
+
+# Estilo para el título del documento
+estilo_titulo = estilos['Title']
+estilo_titulo.fontName = 'NotoSans-Bold'
+estilo_titulo.fontSize = 18
+estilo_titulo.alignment = 1 # Centro
+
+# Estilo para los títulos de sección
+estilo_seccion = estilos['Heading2']
+estilo_seccion.fontName = 'NotoSans-Bold'
+estilo_seccion.fontSize = 12
+estilo_seccion.spaceAfter = 5
+estilo_seccion.leftIndent = 0
+
+#---- configuracion para Canvas
 BASE_DIR = "/app/share/olladoc/fonts/"
 
 pdfmetrics.registerFont(TTFont("DejaVuSans", os.path.join(BASE_DIR, "DejaVuSans.ttf")))
 pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", os.path.join(BASE_DIR, "DejaVuSans-Bold.ttf")))
+pdfmetrics.registerFont(TTFont("NotoSans-Regular", os.path.join(BASE_DIR, "NotoSans-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("NotoSans-Bold", os.path.join(BASE_DIR, "NotoSans-Bold.ttf")))
+
+pdfmetrics.registerFont(TTFont("LiberationSans-Regular", os.path.join(BASE_DIR, "LiberationSans-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("LiberationSans-Bold", os.path.join(BASE_DIR, "LiberationSans-Bold.ttf")))
+
 
 def guardar_historia_clinica_pdf(widget, datos_historia_clinica, modelo, idHC):
     # Paso 1: Diálogo para elegir carpeta
@@ -39,7 +72,7 @@ def _on_guardar_pdf_resultado(dialog, result, datos_historia_clinica, widget):
         if not ruta.endswith(".pdf"):
             ruta += ".pdf"
 
-        generar_pdf_historia_clinica(ruta, datos_historia_clinica)
+        generar_pdf_historia_clinica_platus(ruta, datos_historia_clinica)
 
         # Emitir señal o directamente lanzar toast
         if hasattr(widget, "toast_overlay"):
@@ -51,17 +84,67 @@ def _on_guardar_pdf_resultado(dialog, result, datos_historia_clinica, widget):
     except GLib.Error as e:
         print(f"Error al guardar archivo: {e.message}")
 
-def generar_pdf_historia_clinica(ruta, datos):
+
+
+# Esta función reemplaza a la antigua que usaba canvas.drawString
+def generar_pdf_historia_clinica_platus(ruta, datos):
+
+    # Definir el documento (SimpleDocTemplate)
+    # Se define pagesize y los márgenes
+    doc = SimpleDocTemplate(
+        ruta,
+        pagesize=A4,
+        leftMargin=50,
+        rightMargin=50,
+        topMargin=50,
+        bottomMargin=50,
+        title="HC-olladoc"
+    )
+    story = []
+
+    # 1. Título principal
+    titulo_principal = Paragraph("Historia Clínica", estilo_titulo)
+    story.append(titulo_principal)
+    story.append(Spacer(1, 15))
+
+    # 2. Fecha
+    fecha_actual = datetime.date.today().strftime("%d/%m/%Y")
+    fecha_parrafo = Paragraph(f"Fecha: {fecha_actual}", estilo_normal)
+    story.append(fecha_parrafo)
+    story.append(Spacer(1, 15))
+
+    # 3. Contenido de las secciones
+    for seccion, contenido in datos.items():
+        if not contenido:
+            continue
+
+        # Título de la sección
+        titulo_seccion = Paragraph(f"{seccion}:", estilo_seccion)
+        story.append(titulo_seccion)
+
+        # Contenido como Párrafo
+        # Usamos <br/> para forzar saltos de línea (incluyendo líneas en blanco)
+        contenido_formateado = contenido.replace('\n', '<br/>')
+
+        parrafo_contenido = Paragraph(contenido_formateado, estilo_normal)
+        story.append(parrafo_contenido)
+        story.append(Spacer(1, 10)) # Espacio extra entre secciones
+
+    # 4. Construir el documento
+    doc.build(story)
+
+
+def generar_pdf_historia_clinica_canvas(ruta, datos):
     c = canvas.Canvas(ruta, pagesize=A4)
     c.setTitle("Historia Clínica")
     ancho, alto = A4
     y = alto - 50  # Margen superior
 
-    c.setFont("DejaVuSans-Bold", 16)
+    c.setFont("NotoSans-Bold", 16)
     c.drawString(50, y, "Historia Clínica")
     y -= 30
 
-    c.setFont("DejaVuSans", 11)
+    c.setFont("NotoSans-Regular", 11)
     fecha_actual = datetime.date.today().strftime("%d/%m/%Y")
     c.drawString(50, y, f"Fecha: {fecha_actual}")
     y -= 30
@@ -69,10 +152,10 @@ def generar_pdf_historia_clinica(ruta, datos):
     for seccion, contenido in datos.items():
         if not contenido:
             continue
-        c.setFont("DejaVuSans-Bold", 12)
+        c.setFont("NotoSans-Bold", 12)
         c.drawString(50, y, f"{seccion}:")
         y -= 20
-        c.setFont("DejaVuSans", 11)
+        c.setFont("NotoSans-Regular", 11)
         
         for linea in contenido.split("\n"):
             # Preservar líneas en blanco
