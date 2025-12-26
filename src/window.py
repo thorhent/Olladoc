@@ -157,7 +157,7 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.btn_evaluacion_IA.set_sensitive(False)  # Deshabilitado al inicio
         self.modelo_IA = self.get_application().modelo_IA
 
-        self.modelo_IA_print = self.modelo_IA.split(':')[0]
+        self.modelo_IA_print = self.modelo_IA.split('-')[0]
 
         self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
@@ -210,7 +210,7 @@ class OlladocWindow(Adw.ApplicationWindow):
 
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo
-        self.modelo_IA_print = nuevo_modelo.split(':')[0]
+        self.modelo_IA_print = nuevo_modelo.split('-')[0]
         self.btn_generar_resumen.set_label(f"Consultar {self.modelo_IA_print}")
         self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
