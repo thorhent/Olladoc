@@ -6,3 +6,4 @@ data/io.github.thorhent.Olladoc.gschema.xml
 src/main.py
 src/window.py
 src/window.ui
+
