@@ -978,6 +978,8 @@
                                                 <property name="monospace">true</property>
                                                 <property name="margin-start">5</property>
                                                 <property name="margin-end">5</property>
+                                                <property name="vexpand">True</property>
+                                                <property name="hexpand">True</property>
                                               </object>
                                             </child>
                                           </object>
