@@ -171,6 +171,8 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
+        #pagina 5
+        self.inicializar_signos_vitales()
 
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
@@ -221,6 +223,11 @@ class OlladocWindow(Adw.ApplicationWindow):
         page5 = self.navigation_view.find_page("page5")
         self.navigation_view.pop_to_page(page5)
 
+    def inicializar_signos_vitales(self):
+        self.spin_fc.set_value(80)
+        self.spin_fr.set_value(16)
+        self.spin_temp.set_value(37)
+        self.spin_sat.set_value(100)
 
     def _auto_scroll_textview(self, textview):
         parent = textview.get_parent()
@@ -492,8 +499,6 @@ class OlladocWindow(Adw.ApplicationWindow):
             elif isinstance(entry, Adw.ComboRow):
                 entry.set_selected(0)
 
-        def limpiar_spin(spin):
-            spin.set_value(spin.get_adjustment().get_lower())
 
         # Página 1
         limpiar_entry(self.entry_motivo)
@@ -519,10 +524,7 @@ class OlladocWindow(Adw.ApplicationWindow):
 
 
         # Página 5
-        limpiar_spin(self.spin_fc)
-        limpiar_spin(self.spin_fr)
-        limpiar_spin(self.spin_temp)
-        limpiar_spin(self.spin_sat)
+        self.inicializar_signos_vitales()
         limpiar_entry(self.entry_pa)
         limpiar_textview(self.text_exploracion_fisica)
 
