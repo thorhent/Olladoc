@@ -62,9 +62,9 @@ class OlladocApplication(Adw.Application):
         about = Adw.AboutDialog(application_name='Olladoc',
                                 application_icon='io.github.thorhent.Olladoc',
                                 developer_name='Taylan Branco Meurer',
-                                version='1.11.25',
+                                version='1.2.26',
                                 developers=['Taylan Branco Meurer'],
-                                copyright='© 2025 Taylan Branco Meurer')
+                                copyright='© 2026 Taylan Branco Meurer')
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)

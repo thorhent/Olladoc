@@ -82,7 +82,7 @@ A continuación se explican los pasos de instalación en Fedora (recomendado) y 
 ### 🔹 Fedora (42)
 
 ```bash
-sudo dnf install ollama
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
 ### 🔹 Ubuntu/Debian 
