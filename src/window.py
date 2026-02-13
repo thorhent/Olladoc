@@ -137,6 +137,16 @@ class OlladocWindow(Adw.ApplicationWindow):
         self.text_antecedentes_personales.get_buffer().connect("changed", self.validar_anamnesis)
         self.text_antecedentes_familiares.get_buffer().connect("changed", self.validar_anamnesis)
 
+        self.text_enfermedad_actual.get_buffer().connect(
+            "changed",
+            lambda buf: self._auto_scroll_textview(self.text_enfermedad_actual)
+        )
+
+        self.text_exploracion_fisica.get_buffer().connect(
+            "changed",
+            lambda buf: self._auto_scroll_textview(self.text_exploracion_fisica)
+        )
+
         # pagina 2
         self.btn_iniciar_audio.connect("clicked", self.on_iniciar_audio)
         self.btn_detener_audio.connect("clicked", self.on_detener_audio)
@@ -161,6 +171,7 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         self.AdwPage4Evaluacion.set_title(f"Consultar para diagnóstico inicial [{self.modelo_IA_print}]")
 
+
         #pagina 6
         self.btn_limpiar.connect("clicked", self.limpiar_campos)
         self.btn_limpiar.set_sensitive(False)
@@ -171,6 +182,8 @@ class OlladocWindow(Adw.ApplicationWindow):
 
         self.btn_guardar_pdf.connect("clicked", self.on_generar_pdf_historia_clinica)
         self.btn_guardar_pdf.set_sensitive(False)
+
+
 
     def on_to_page2(self, button):
         self.navigation_view.push_by_tag("page2")
@@ -207,6 +220,23 @@ class OlladocWindow(Adw.ApplicationWindow):
     def on_back_to_page5(self, button):
         page5 = self.navigation_view.find_page("page5")
         self.navigation_view.pop_to_page(page5)
+
+
+    def _auto_scroll_textview(self, textview):
+        parent = textview.get_parent()
+        while parent and not isinstance(parent, Gtk.ScrolledWindow):
+            parent = parent.get_parent()
+
+        if not parent:
+            return
+
+        vadj = parent.get_vadjustment()
+
+        def scroll():
+            vadj.set_value(vadj.get_upper() - vadj.get_page_size())
+            return False
+
+        GLib.idle_add(scroll)
 
     def on_modelo_actualizado(self, nuevo_modelo):
         self.modelo_IA = nuevo_modelo

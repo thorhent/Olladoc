@@ -7,3 +7,6 @@ src/main.py
 src/window.py
 src/window.ui
 
+src/preferencias.py
+src/guardar.py
+
